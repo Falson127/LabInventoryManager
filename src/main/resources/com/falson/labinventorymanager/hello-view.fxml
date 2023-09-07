@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.falson.labinventorymanager.HelloController">
    <children>
       <TextField fx:id="mainSearchBar" layoutX="403.0" layoutY="36.0" prefHeight="25.0" prefWidth="188.0" />
       <Label layoutX="360.0" layoutY="40.0" text="Search" />
@@ -25,7 +25,7 @@
             <Glow level="0.78" />
          </effect>
       </Label>
-      <Button fx:id="buttonAddLocation" layoutX="509.0" layoutY="314.0" mnemonicParsing="false" text="Add Location" />
+      <Button fx:id="buttonAddLocation" layoutX="509.0" layoutY="314.0" mnemonicParsing="false" onMouseClicked="#onAddLocationButtonClick" text="Add Location" />
       <TreeView fx:id="locationTreeView" layoutX="7.0" layoutY="100.0" prefHeight="275.0" prefWidth="147.0" />
    </children>
 </Pane>
