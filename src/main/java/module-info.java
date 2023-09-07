@@ -4,6 +4,7 @@ module com.falson.labinventorymanager {
 
     requires org.controlsfx.controls;
     requires com.dlsc.formsfx;
+    requires java.sql;
 
     opens com.falson.labinventorymanager to javafx.fxml;
     exports com.falson.labinventorymanager;
