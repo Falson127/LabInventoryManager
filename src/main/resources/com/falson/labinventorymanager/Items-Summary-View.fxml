@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<VBox fx:id="itemSummaryVbox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" />
+<SplitPane fx:id="mainSummarySplitPane" dividerPositions="0.7157190635451505, 0.5" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
+  <items>
+    <AnchorPane fx:id="summaryLeftAnchor" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+         <children>
+            <TableView layoutY="-2.0" prefHeight="406.0" prefWidth="425.0">
+              <columns>
+                <TableColumn prefWidth="75.0" text="ID" />
+                <TableColumn prefWidth="127.0" text="Name" />
+                  <TableColumn prefWidth="222.0" text="Description" />
+              </columns>
+            </TableView>
+         </children></AnchorPane>
+    <AnchorPane fx:id="summaryRightAnchor" minHeight="0.0" minWidth="0.0" prefHeight="398.0" prefWidth="0.0" />
+      <DialogPane fx:id="summaryDialogPane" prefHeight="398.0" prefWidth="167.0" />
+  </items>
+</SplitPane>
