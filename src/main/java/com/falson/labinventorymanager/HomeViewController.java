@@ -3,7 +3,7 @@ package com.falson.labinventorymanager;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-
+import java.util.List;
 import java.sql.*;
 
 
@@ -28,7 +28,11 @@ public class HomeViewController {
             }
         });
     }
-    public ResultSet GetTableData(String location){
+
+    private List<Tuple<String,String>> BuildLocationsTree(){
+        return null;
+    }
+    private ResultSet GetTableData(String location){
         try {
             String url = "jdbc:sqlite:LabInventory.sqlite";
             Connection connection = DriverManager.getConnection(url);
