@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class DatabaseController {
+    String url = "jdbc:sqlite:LabInventory.sqlite";
     private Connection connection;
     @FXML
     private TextField addEntry_Name;
@@ -31,7 +32,7 @@ public class DatabaseController {
         String parent = addLocation_Parent.getText();
         String room = addLocation_Room.getText();
         try{
-            String url = "jdbc:sqlite:LabInventory.sqlite";
+
             connection = DriverManager.getConnection(url);
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO locations_index(Name, Parent, Room) VALUES(?,?,?)");
             preparedStatement.setString(1,locationName);
@@ -74,4 +75,6 @@ public class DatabaseController {
             e.printStackTrace();
         }
     }
+
+
 }

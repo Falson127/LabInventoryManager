@@ -7,11 +7,11 @@
   <items>
     <AnchorPane fx:id="summaryLeftAnchor" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
          <children>
-            <TableView layoutY="-2.0" prefHeight="406.0" prefWidth="425.0">
+            <TableView fx:id="itemSummaryTable" layoutY="-2.0" prefHeight="406.0" prefWidth="425.0">
               <columns>
-                <TableColumn prefWidth="75.0" text="ID" />
-                <TableColumn prefWidth="127.0" text="Name" />
-                  <TableColumn prefWidth="222.0" text="Description" />
+                <TableColumn fx:id="itemSummaryTableID" prefWidth="75.0" text="ID" />
+                <TableColumn fx:id="itemSummaryTableName" prefWidth="127.0" text="Name" />
+                  <TableColumn fx:id="itemSummaryTableDescription" prefWidth="222.0" text="Description" />
               </columns>
             </TableView>
          </children></AnchorPane>
