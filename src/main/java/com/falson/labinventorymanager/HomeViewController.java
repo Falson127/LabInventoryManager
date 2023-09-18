@@ -8,13 +8,18 @@ import java.sql.*;
 
 
 public class HomeViewController {
+//TODO Create TreeView factory
+//TODO Determine system ensuring parent field for location refers to a UID rather than a non-unique name
 
     TreeView<String> locationSelector = new TreeView<>();
     @FXML
     private Pane mainDynamicPanel;
     @FXML
     private Label dynamicLocationLabel;
-    private void RetrieveInventoryAtLocation(){
+    @FXML
+    private TableView<Object> ItemSummaryTable;
+
+    private void RetrieveInventoryAtLocation() {
         locationSelector.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null){
                 //code to be executed when item selection is changed
@@ -22,16 +27,24 @@ public class HomeViewController {
                 //This view must then be loaded into the mainDynamicPanel
                 String selectedLocation = newValue.getValue();
                 dynamicLocationLabel.setText(selectedLocation); //set Location Label
-
+                ItemSummaryTable.getItems().clear(); //clear items on location change, then load new items below
                 ResultSet inventory = GetTableData(selectedLocation);
-
+                try {
+                    while(inventory.next()) {
+                        ItemSummaryTable.getItems().add(new Object[]{
+                                inventory.getInt("ID"),
+                                inventory.getString("Name"),
+                                inventory.getString("Description")
+                        });
+                    }
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
     }
 
-    private List<Tuple<String,String>> BuildLocationsTree(){
-        return null;
-    }
+
     private ResultSet GetTableData(String location){
         try {
             String url = "jdbc:sqlite:LabInventory.sqlite";
