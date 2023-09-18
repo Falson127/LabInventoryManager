@@ -3,11 +3,10 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
 <AnchorPane fx:id="addEntry_Anchor" prefHeight="149.0" prefWidth="511.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.falson.labinventorymanager.DatabaseController">
    <children>
-      <Button fx:id="addEntry_CancelButton" layoutX="354.0" layoutY="103.0" mnemonicParsing="false" text="Cancel" />
-      <Button fx:id="addEntry_SubmitButton" layoutX="425.0" layoutY="103.0" mnemonicParsing="false" text="Submit" />
+      <Button fx:id="addEntry_CancelButton" layoutX="354.0" layoutY="103.0" mnemonicParsing="false" onMouseClicked="#onCancelEntryButtonClick" text="Cancel" />
+      <Button fx:id="addEntry_SubmitButton" layoutX="425.0" layoutY="103.0" mnemonicParsing="false" onMouseClicked="#onSubmitEntryButtonClick" text="Submit" />
       <ChoiceBox fx:id="addEntry_Location" layoutX="14.0" layoutY="35.0" prefHeight="25.0" prefWidth="149.0" />
       <Label layoutX="14.0" layoutY="14.0" text="Location" />
       <Label layoutX="174.0" layoutY="14.0" text="Name" />

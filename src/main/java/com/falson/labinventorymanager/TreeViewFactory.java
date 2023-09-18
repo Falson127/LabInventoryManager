@@ -1,10 +1,49 @@
 package com.falson.labinventorymanager;
 
+import javafx.scene.Parent;
+
+import java.util.ArrayList;
 import java.util.List;
+import java.sql.*;
+import java.util.Optional;
 
 public class TreeViewFactory {
+    String url = "jdbc:sqlite:LabInventory.sqlite";
+    //To achieve our goal, let's iterate through and build out layers with recursion. First we'll look for entries with "null" parentID, as root entries
+    //These are placed into a list of Layer0. We then look for entries whose parentID is in that list and add them to the next layer.
+    //We'll need to create something to store the children of each entry as well. This may require a custom data structure that we load into for easier scaling
 
-    private List<Tuple<String,String>> BuildLocationsTree(){
+    private List<Location> BuildLocationsTree(){
+        try {
+            Connection connection = DriverManager.getConnection(url);
+            PreparedStatement locationRetriever = connection.prepareStatement("SELECT (Name, ID, ParentID) from locations_index");
+            ResultSet unsortedLocationsIndex = locationRetriever.executeQuery();
+            List<Location> pairedIDList = new ArrayList<>();
+            while(unsortedLocationsIndex.next())
+            {
+                int ID = unsortedLocationsIndex.getInt("ID");
+                int ParentID = unsortedLocationsIndex.getInt("ParentID");
+                String Name = unsortedLocationsIndex.getString("Name");
+                Location location = new Location(ID, Name, Optional.of(ParentID));
+                pairedIDList.add(location);
+            }
+            for (Location locationEntry : pairedIDList)
+            {
+                if (locationEntry.getParentID() != null)
+                {
+                    continue;
+                }
+                else
+                {
+
+                }
+            }
+            unsortedLocationsIndex.close();
+            locationRetriever.close();
+            connection.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         return null;
     }
 }

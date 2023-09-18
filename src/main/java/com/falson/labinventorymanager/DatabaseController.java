@@ -55,7 +55,6 @@ public class DatabaseController {
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
 
-
         try {
             LocalDate Date = addEntry_Date.getValue();
             String DateString = Date.format(formatter);
@@ -75,6 +74,9 @@ public class DatabaseController {
             e.printStackTrace();
         }
     }
-
+    @FXML
+    private void onCancelEntryButtonClick(){}
+    @FXML
+    private void onCancelLocationButtonClick(){}
 
 }

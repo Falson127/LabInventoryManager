@@ -9,8 +9,8 @@
          <children>
             <TableView fx:id="itemSummaryTable" layoutY="-2.0" prefHeight="406.0" prefWidth="425.0">
               <columns>
-                <TableColumn fx:id="itemSummaryTableID" prefWidth="75.0" text="ID" />
-                <TableColumn fx:id="itemSummaryTableName" prefWidth="127.0" text="Name" />
+                <TableColumn fx:id="itemSummaryTableLocation" prefWidth="103.0" text="Location" />
+                <TableColumn fx:id="itemSummaryTableName" prefWidth="99.0" text="Name" />
                   <TableColumn fx:id="itemSummaryTableDescription" prefWidth="222.0" text="Description" />
               </columns>
             </TableView>
