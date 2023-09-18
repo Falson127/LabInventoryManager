@@ -10,6 +10,7 @@ import java.sql.*;
 public class HomeViewController {
 //TODO Create TreeView factory
 //TODO Determine system ensuring parent field for location refers to a UID rather than a non-unique name
+//TODO Change AddEntry to pull location from currently selected location in tree view, to prevent location ambiguity
 
     TreeView<String> locationSelector = new TreeView<>();
     @FXML

@@ -7,10 +7,10 @@ import java.util.Optional;
 public class Location {
     private int id;
     private String name;
-    private Optional<Integer> parentID;
+    private int parentID;
     private List<Location> children;
 
-    public Location(int id, String name, Optional<Integer> parentID) {
+    public Location(int id, String name, int parentID) {
         this.id = id;
         this.name = name;
         this.parentID = parentID;
@@ -26,7 +26,10 @@ public class Location {
         return children;
     }
 
-    public Optional<Integer> getParentID() {
+    public int getParentID() {
         return parentID;
+    }
+    public void addChild(Location location){
+        this.children.add(location);
     }
 }
