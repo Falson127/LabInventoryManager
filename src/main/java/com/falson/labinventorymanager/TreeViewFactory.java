@@ -11,9 +11,7 @@ import java.sql.*;
 
 public class TreeViewFactory {
     String url = "jdbc:sqlite:LabInventory.sqlite";
-    //To achieve our goal, let's iterate through and build out layers with recursion. First we'll look for entries with "null" parentID, as root entries
-    //These are placed into a list of Layer0. We then look for entries whose parentID is in that list and add them to the next layer.
-    //We'll need to create something to store the children of each entry as well. This may require a custom data structure that we load into for easier scaling
+
     private List<Location> GetLocationsList(){
         try {
             Connection connection = DriverManager.getConnection(url);
