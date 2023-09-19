@@ -14,7 +14,6 @@ public class TreeViewFactory {
     //To achieve our goal, let's iterate through and build out layers with recursion. First we'll look for entries with "null" parentID, as root entries
     //These are placed into a list of Layer0. We then look for entries whose parentID is in that list and add them to the next layer.
     //We'll need to create something to store the children of each entry as well. This may require a custom data structure that we load into for easier scaling
-
     private List<Location> GetLocationsList(){
         try {
             Connection connection = DriverManager.getConnection(url);
@@ -38,11 +37,8 @@ public class TreeViewFactory {
             throw new RuntimeException(e);
         }
     }
-
-
-
-    public Tuple<TreeView<Location>,List<Location>> BuildTreeView(List<Location> locationsList){
-        TreeView<Location> treeView = new TreeView<Location>();
+    public TreeView<Location> BuildTreeView(List<Location> locationsList){
+        TreeView<Location> treeView = new TreeView<>();
         for (Location location: locationsList
              ) {
             if (location.getID() == 0){
@@ -58,15 +54,11 @@ public class TreeViewFactory {
             }
         }//load all locations that aren't set as ID = 0 for root into the children of the root item
         //pass loaded treeView to next method for sorting the relationships with locationList in Tuple
-        Tuple<TreeView<Location>,List<Location>> unsortedTuple = new Tuple<>(treeView,locationsList);
-        return unsortedTuple;
+        return treeView;
     }
 
-    public TreeView<Location> SortTreeView(){
-        Tuple<TreeView<Location>,List<Location>> unsortedTuple = BuildTreeView(GetLocationsList());
-        TreeView<Location> unsortedTreeView = unsortedTuple.first();
-        List<Location> locationsList = unsortedTuple.second();
-        TreeView<Location> sortedView = unsortedTreeView;
+    public TreeView<Location> GetSortedTreeView(){
+        TreeView<Location> sortedView = BuildTreeView(GetLocationsList());
         List<TreeItem<Location>> listOfItems = sortedView.getRoot().getChildren();
         outerLoop:
         for (TreeItem<Location> treeItem: listOfItems
@@ -81,7 +73,6 @@ public class TreeViewFactory {
                 }
             }
         }
-
         return sortedView;
     }
 }
