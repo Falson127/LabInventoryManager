@@ -1,13 +1,13 @@
 package com.falson.labinventorymanager;
 
-import javafx.scene.Parent;
+
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.*;
-import java.util.Optional;
+
 
 public class TreeViewFactory {
     String url = "jdbc:sqlite:LabInventory.sqlite";
@@ -39,19 +39,7 @@ public class TreeViewFactory {
         }
     }
 
-    public List<Location> BuildChildrenLists(){
-        List<Location> locationsList = GetLocationsList();
-        for (int i = 0; i < locationsList.size(); i++){
-            int currentLocationID = locationsList.get(i).getID();
-            for (Location location: locationsList //iterate through all locations, check parent against upper loop ID. If they match, add sub-location to children list of parent location
-                 ) {
-                if (location.getParentID() == currentLocationID){
-                    locationsList.get(i).addChild(location);
-                }
-            }
-        }
-        return locationsList;
-    }
+
 
     public Tuple<TreeView<Location>,List<Location>> BuildTreeView(List<Location> locationsList){
         TreeView<Location> treeView = new TreeView<Location>();
@@ -75,7 +63,7 @@ public class TreeViewFactory {
     }
 
     public TreeView<Location> SortTreeView(){
-        Tuple<TreeView<Location>,List<Location>> unsortedTuple = BuildTreeView(BuildChildrenLists());
+        Tuple<TreeView<Location>,List<Location>> unsortedTuple = BuildTreeView(GetLocationsList());
         TreeView<Location> unsortedTreeView = unsortedTuple.first();
         List<Location> locationsList = unsortedTuple.second();
         TreeView<Location> sortedView = unsortedTreeView;

@@ -3,13 +3,12 @@ package com.falson.labinventorymanager;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import java.util.List;
 import java.sql.*;
 
 
 public class HomeViewController {
 //TODO Create TreeView factory
-//TODO Determine system ensuring parent field for location refers to a UID rather than a non-unique name
+//TODO Change AddLocation to pull parentID from current selected location in tree view, so user doesn't have to keep track of location IDs
 //TODO Change AddEntry to pull location from currently selected location in tree view, to prevent location ambiguity
 
     TreeView<String> locationSelector = new TreeView<>();
