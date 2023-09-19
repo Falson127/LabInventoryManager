@@ -7,11 +7,11 @@ import java.sql.*;
 
 
 public class HomeViewController {
-//TODO Create TreeView factory
+
 //TODO Change AddLocation to pull parentID from current selected location in tree view, so user doesn't have to keep track of location IDs
 //TODO Change AddEntry to pull location from currently selected location in tree view, to prevent location ambiguity
 
-    TreeView<String> locationSelector = new TreeView<>();
+    TreeView<Location> locationSelector = new TreeView<>();
     @FXML
     private Pane mainDynamicPanel;
     @FXML
@@ -25,10 +25,10 @@ public class HomeViewController {
                 //code to be executed when item selection is changed
                 //this will generate a query to the database and pull the resulting table into the Items-Summary view
                 //This view must then be loaded into the mainDynamicPanel
-                String selectedLocation = newValue.getValue();
-                dynamicLocationLabel.setText(selectedLocation); //set Location Label
+                Location selectedLocation = newValue.getValue();
+                dynamicLocationLabel.setText(selectedLocation.getName()); //set Location Label
                 ItemSummaryTable.getItems().clear(); //clear items on location change, then load new items below
-                ResultSet inventory = GetTableData(selectedLocation);
+                ResultSet inventory = GetTableData(selectedLocation.getName());
                 try {
                     while(inventory.next()) {
                         ItemSummaryTable.getItems().add(new Object[]{
@@ -60,6 +60,7 @@ public class HomeViewController {
     }
     @FXML
     private void onAddLocationButtonClick() {
+        Location currentLocation = locationSelector.getSelectionModel().getSelectedItem().getValue();
     }
     @FXML
     private void onAddEntryButtonClick(){
