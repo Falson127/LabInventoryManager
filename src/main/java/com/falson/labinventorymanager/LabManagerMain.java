@@ -19,5 +19,7 @@ public class LabManagerMain extends Application {
 
     public static void main(String[] args) {
         launch();
+
+
     }
 }

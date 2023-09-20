@@ -9,11 +9,13 @@ import java.util.List;
 import java.sql.*;
 
 
+
 public class TreeViewFactory {
     String url = "jdbc:sqlite:LabInventory.sqlite";
 
     private List<Location> GetLocationsList(){
         try {
+            Class.forName("org.sqlite.JDBC"); //TODO Finish this, it's necessary to stop the driver breaking things
             Connection connection = DriverManager.getConnection(url);
             PreparedStatement locationRetriever = connection.prepareStatement("SELECT (Name, ID, ParentID) from locations_index");
             ResultSet unsortedLocationsIndex = locationRetriever.executeQuery();

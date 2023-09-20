@@ -1,17 +1,26 @@
 package com.falson.labinventorymanager;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import javafx.stage.Stage;
+
+import java.io.IOException;
+import java.net.URL;
 import java.sql.*;
+import java.util.ResourceBundle;
 
 
-public class HomeViewController {
+public class HomeViewController implements Initializable {
 
 //TODO Change AddLocation to pull parentID from current selected location in tree view, so user doesn't have to keep track of location IDs
 //TODO Change AddEntry to pull location from currently selected location in tree view, to prevent location ambiguity
 
-    TreeView<Location> locationSelector = new TreeView<>();
+
+    TreeView<Location> locationSelector;
     @FXML
     private Pane mainDynamicPanel;
     @FXML
@@ -19,6 +28,10 @@ public class HomeViewController {
     @FXML
     private TableView<Object> ItemSummaryTable;
 
+    public void initialize(URL location, ResourceBundle resources){
+        TreeViewFactory factory = new TreeViewFactory();
+        locationSelector = factory.GetSortedTreeView();
+    }
     private void RetrieveInventoryAtLocation() {
         locationSelector.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null){
@@ -59,11 +72,25 @@ public class HomeViewController {
         }
     }
     @FXML
-    private void onAddLocationButtonClick() {
-        Location currentLocation = locationSelector.getSelectionModel().getSelectedItem().getValue();
+    private void onAddLocationButtonClick() throws IOException {
+        //Location currentLocation = locationSelector.getSelectionModel().getSelectedItem().getValue();
+        FXMLLoader fxmlLoader = new FXMLLoader(LabManagerMain.class.getResource("Add-Location-Dialogue.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(),511,149);
+        Stage stage = new Stage();
+        stage.setTitle("Add Location");
+        stage.setScene(scene);
+        stage.show();
+
     }
     @FXML
-    private void onAddEntryButtonClick(){
+    private void onAddEntryButtonClick() throws IOException{
+        //Location currentLocation = locationSelector.getSelectionModel().getSelectedItem().getValue();
+        FXMLLoader fxmlLoader = new FXMLLoader(LabManagerMain.class.getResource("Add-Entry-Dialogue.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(),511,149);
+        Stage stage = new Stage();
+        stage.setTitle("Add Entry");
+        stage.setScene(scene);
+        stage.show();
     }
 
 
