@@ -28,7 +28,7 @@ public class DatabaseController {
     private void onSubmitLocationButtonClick(){
         String locationName = addLocation_Name.getText() ;
         //int parentID = Integer.parseInt(addLocation_Parent.getText());
-
+        //testing commit tracking
         try{
             //TODO Redesign to grab location from TreeView, rather than having user specify ParentID. User should only be prompted to enter name for location
             connection = DriverManager.getConnection(url);
