@@ -27,14 +27,14 @@ public class DatabaseController {
     @FXML
     private void onSubmitLocationButtonClick(){
         String locationName = addLocation_Name.getText() ;
-        //int parentID = Integer.parseInt(addLocation_Parent.getText());
-
+        int parentID = 0;
+        //testing commit tracking
         try{
             //TODO Redesign to grab location from TreeView, rather than having user specify ParentID. User should only be prompted to enter name for location
             connection = DriverManager.getConnection(url);
-            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO locations_index(Name, ParentID) VALUES(?,?,?)");
+            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO locations_index(Name, ParentID) VALUES(?,?)");
             preparedStatement.setString(1,locationName);
-            //preparedStatement.setInt(2,parentID);
+            preparedStatement.setInt(2,parentID);
             preparedStatement.executeUpdate();
             preparedStatement.close();
             connection.close();

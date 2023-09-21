@@ -20,7 +20,7 @@ public class HomeViewController {
 //TODO Change AddEntry to pull location from currently selected location in tree view, to prevent location ambiguity
 
 
-    TreeView<Location> locationSelector = new TreeViewFactory().GetSortedTreeView();
+    public static TreeView<Location> locationSelector = new TreeViewFactory().GetSortedTreeView();
     @FXML
     private Pane mainDynamicPanel;
     @FXML
