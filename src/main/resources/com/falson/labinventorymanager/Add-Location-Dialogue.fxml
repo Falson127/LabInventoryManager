@@ -3,15 +3,11 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="addLocation_Anchor" prefHeight="149.0" prefWidth="511.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.falson.labinventorymanager.DatabaseController">
+<AnchorPane fx:id="addLocation_Anchor" prefHeight="121.0" prefWidth="282.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.falson.labinventorymanager.DatabaseController">
    <children>
-      <Button fx:id="addLocation_SubmitButton" layoutX="428.0" layoutY="110.0" mnemonicParsing="false" onMouseClicked="#onSubmitLocationButtonClick" text="Submit" />
-      <TextField fx:id="addLocation_Name" layoutX="14.0" layoutY="38.0" />
-      <TextField fx:id="addLocation_Room" layoutX="175.0" layoutY="38.0" />
-      <TextField fx:id="addLocation_Parent" layoutX="333.0" layoutY="38.0" />
+      <Button fx:id="addLocation_SubmitButton" layoutX="203.0" layoutY="75.0" mnemonicParsing="false" onMouseClicked="#onSubmitLocationButtonClick" text="Submit" />
+      <TextField fx:id="addLocation_Name" layoutX="14.0" layoutY="38.0" prefHeight="25.0" prefWidth="242.0" />
       <Label layoutX="14.0" layoutY="14.0" text="Location Name" />
-      <Label layoutX="175.0" layoutY="14.0" text="Room" />
-      <Label layoutX="333.0" layoutY="14.0" text="Parent ID" />
-      <Button fx:id="addLocation_CancelButton" layoutX="362.0" layoutY="110.0" mnemonicParsing="false" onMouseClicked="#onCancelLocationButtonClick" text="Cancel" />
+      <Button fx:id="addLocation_CancelButton" layoutX="143.0" layoutY="75.0" mnemonicParsing="false" onMouseClicked="#onCancelLocationButtonClick" text="Cancel" />
    </children>
 </AnchorPane>

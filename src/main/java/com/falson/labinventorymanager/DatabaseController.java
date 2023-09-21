@@ -21,23 +21,20 @@ public class DatabaseController {
     private DatePicker addEntry_Date;
     @FXML
     private TextField addLocation_Name;
-    @FXML
-    private TextField addLocation_Parent;
-    @FXML
-    private TextField addLocation_Room;
+
+
 
     @FXML
     private void onSubmitLocationButtonClick(){
         String locationName = addLocation_Name.getText() ;
-        String parent = addLocation_Parent.getText();
-        String room = addLocation_Room.getText();
-        try{
+        //int parentID = Integer.parseInt(addLocation_Parent.getText());
 
+        try{
+            //TODO Redesign to grab location from TreeView, rather than having user specify ParentID. User should only be prompted to enter name for location
             connection = DriverManager.getConnection(url);
-            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO locations_index(Name, Parent, Room) VALUES(?,?,?)");
+            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO locations_index(Name, ParentID) VALUES(?,?,?)");
             preparedStatement.setString(1,locationName);
-            preparedStatement.setString(2,parent);
-            preparedStatement.setString(3,room);
+            //preparedStatement.setInt(2,parentID);
             preparedStatement.executeUpdate();
             preparedStatement.close();
             connection.close();
