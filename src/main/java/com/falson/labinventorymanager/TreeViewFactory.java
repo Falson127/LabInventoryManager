@@ -15,9 +15,8 @@ public class TreeViewFactory {
 
     private List<Location> GetLocationsList(){
         try {
-            Class.forName("org.sqlite.JDBC"); //TODO Finish this, it's necessary to stop the driver breaking things
             Connection connection = DriverManager.getConnection(url);
-            PreparedStatement locationRetriever = connection.prepareStatement("SELECT (Name, ID, ParentID) from locations_index");
+            PreparedStatement locationRetriever = connection.prepareStatement("SELECT Name, ID, ParentID from locations_index");
             ResultSet unsortedLocationsIndex = locationRetriever.executeQuery();
             List<Location> pairedIDList = new ArrayList<>();
             while(unsortedLocationsIndex.next())

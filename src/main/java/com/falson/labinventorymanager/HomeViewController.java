@@ -14,13 +14,13 @@ import java.sql.*;
 import java.util.ResourceBundle;
 
 
-public class HomeViewController implements Initializable {
+public class HomeViewController {
 
 //TODO Change AddLocation to pull parentID from current selected location in tree view, so user doesn't have to keep track of location IDs
 //TODO Change AddEntry to pull location from currently selected location in tree view, to prevent location ambiguity
 
 
-    TreeView<Location> locationSelector;
+    TreeView<Location> locationSelector = new TreeViewFactory().GetSortedTreeView();
     @FXML
     private Pane mainDynamicPanel;
     @FXML
@@ -28,10 +28,9 @@ public class HomeViewController implements Initializable {
     @FXML
     private TableView<Object> ItemSummaryTable;
 
-    public void initialize(URL location, ResourceBundle resources){
-        TreeViewFactory factory = new TreeViewFactory();
-        locationSelector = factory.GetSortedTreeView();
-    }
+
+
+
     private void RetrieveInventoryAtLocation() {
         locationSelector.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null){
