@@ -26,6 +26,6 @@
          </effect>
       </Label>
       <Button fx:id="buttonAddLocation" layoutX="509.0" layoutY="314.0" mnemonicParsing="false" onMouseClicked="#onAddLocationButtonClick" text="Add Location" />
-      <TreeView fx:id="locationTreeView" layoutX="7.0" layoutY="100.0" prefHeight="275.0" prefWidth="147.0" />
+      <TreeView fx:id="locationSelector" layoutX="7.0" layoutY="100.0" prefHeight="275.0" prefWidth="147.0" />
    </children>
 </Pane>
