@@ -5,9 +5,10 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.sql.*;
-
+import java.util.Map;
 
 
 public class TreeViewFactory {
@@ -36,18 +37,18 @@ public class TreeViewFactory {
             throw new RuntimeException(e);
         }
     }
-    public TreeView<Location> BuildTreeView(List<Location> locationsList){
-        TreeView<Location> treeView = new TreeView<>();
+    public TreeView<Location> BuildTreeView(List<Location> locationsList,TreeView<Location> fxmlTreeView){
+        TreeView<Location> treeView = fxmlTreeView;
         for (Location location: locationsList
              ) {
-            if (location.getID() == 0){
+            if (location.getID() == -1){
                 TreeItem<Location> rootItem = new TreeItem<>(location);
                 treeView.setRoot(rootItem);
             }
         }//find and set the root item
         for (Location location: locationsList
              ) {
-            if(location.getID() != 0){
+            if(location.getID() != -1){
                 TreeItem<Location> treeItem = new TreeItem<>(location);
                 treeView.getRoot().getChildren().add(treeItem);
             }
@@ -56,22 +57,23 @@ public class TreeViewFactory {
         return treeView;
     }
 
-    public TreeView<Location> GetSortedTreeView(){
-        TreeView<Location> sortedView = BuildTreeView(GetLocationsList());
-        List<TreeItem<Location>> listOfItems = sortedView.getRoot().getChildren();
-        outerLoop:
-        for (TreeItem<Location> treeItem: listOfItems
-             ) {
-            int parentID = treeItem.getValue().getParentID();
-            for (TreeItem<Location> potentialParent: listOfItems
-                 ) {
-                int currentID = potentialParent.getValue().getID();
-                if(parentID == currentID){ //if the parentID of the current object matches the ID of the test object, add current Object to test Object's children list
-                    potentialParent.getChildren().add(treeItem);
-                    break outerLoop;
-                }
-            }
+    public void GetSortedTreeView(TreeView<Location> fxmlTreeView){
+        TreeView<Location> sortedView = BuildTreeView(GetLocationsList(), fxmlTreeView);
+        Map<Integer, TreeItem<Location>> parentMap = new HashMap<>();
+        parentMap.put(sortedView.getRoot().getValue().getID(),sortedView.getRoot());
+        for (TreeItem<Location> treeItem: sortedView.getRoot().getChildren()) {
+            Location location = treeItem.getValue();
+            parentMap.put(location.getID(),treeItem);
         }
-        return sortedView;
+        sortedView.getRoot().getChildren().clear();
+        for (Location location: GetLocationsList()) {
+            if (location.getID() != -1) {
+                int parentID = location.getParentID();
+                TreeItem<Location> childItem = parentMap.get(location.getID());
+                TreeItem<Location> parentItem = parentMap.get(parentID);
+                parentItem.getChildren().add(childItem);
+            }
+
+        }
     }
 }
