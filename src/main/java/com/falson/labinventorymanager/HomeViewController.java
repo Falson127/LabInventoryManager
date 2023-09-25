@@ -21,7 +21,7 @@ public class HomeViewController implements Initializable {
 
 //TODO Change AddLocation to pull parentID from current selected location in tree view, so user doesn't have to keep track of location IDs
 //TODO Change AddEntry to pull location from currently selected location in tree view, to prevent location ambiguity
-
+    public static Location currentLocation;
 
     @FXML
     TreeView<Location> locationSelector;
@@ -29,11 +29,6 @@ public class HomeViewController implements Initializable {
     private Pane mainDynamicPanel;
     @FXML
     private Label dynamicLocationLabel;
-    @FXML
-    private TableView<Object> itemSummaryTable;
-
-
-
 
 
     public void initialize(URL url, ResourceBundle resourceBundle){
@@ -41,6 +36,7 @@ public class HomeViewController implements Initializable {
         factory.GetSortedTreeView(this.locationSelector);
         locationSelector.setCellFactory(tree -> new LocationTreeCell());
         UpdateTableView();
+        SetTreeEventWatcher();
     }
     public void UpdateTableView(){
         try {
@@ -52,27 +48,15 @@ public class HomeViewController implements Initializable {
             e.printStackTrace();
         }
     }
-    private void RetrieveInventoryAtLocation() {
+    private void SetTreeEventWatcher() {
         locationSelector.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null){
                 //code to be executed when item selection is changed
                 //this will generate a query to the database and pull the resulting table into the Items-Summary view
                 //This view must then be loaded into the mainDynamicPanel
-                Location selectedLocation = newValue.getValue();
-                dynamicLocationLabel.setText(selectedLocation.getName()); //set Location Label
-                itemSummaryTable.getItems().clear(); //clear items on location change, then load new items below
-                ResultSet inventory = GetTableData(selectedLocation.getName());
-                try {
-                    while(inventory.next()) {
-                        itemSummaryTable.getItems().add(new Object[]{
-                                inventory.getInt("ID"),
-                                inventory.getString("Name"),
-                                inventory.getString("Description")
-                        });
-                    }
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
+                currentLocation = newValue.getValue();
+                dynamicLocationLabel.setText(currentLocation.getName()); //set Location Label
+
             }
         });
     }
