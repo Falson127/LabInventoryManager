@@ -27,9 +27,6 @@ public class DatabaseController {
     private DatePicker addEntry_Date;
     @FXML
     private TextField addLocation_Name;
-
-
-
     @FXML
     private void onSubmitLocationButtonClick(){
         String locationName = addLocation_Name.getText() ;
@@ -79,6 +76,7 @@ public class DatabaseController {
             e.printStackTrace();
         }
     }
+
     @FXML
     private void onCancelEntryButtonClick(){}
     @FXML
