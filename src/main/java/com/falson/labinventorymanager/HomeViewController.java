@@ -3,10 +3,13 @@ package com.falson.labinventorymanager;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 import java.io.IOException;
 import java.net.URL;
@@ -27,14 +30,27 @@ public class HomeViewController implements Initializable {
     @FXML
     private Label dynamicLocationLabel;
     @FXML
-    private TableView<Object> ItemSummaryTable;
+    private TableView<Object> itemSummaryTable;
+
+
 
 
 
     public void initialize(URL url, ResourceBundle resourceBundle){
         TreeViewFactory factory = new TreeViewFactory();
-        new TreeViewFactory().GetSortedTreeView(this.locationSelector);
+        factory.GetSortedTreeView(this.locationSelector);
         locationSelector.setCellFactory(tree -> new LocationTreeCell());
+        UpdateTableView();
+    }
+    public void UpdateTableView(){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Items-Summary-View.fxml"));
+            Parent root = loader.load();
+            mainDynamicPanel.getChildren().clear();
+            mainDynamicPanel.getChildren().add(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     private void RetrieveInventoryAtLocation() {
         locationSelector.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
@@ -44,11 +60,11 @@ public class HomeViewController implements Initializable {
                 //This view must then be loaded into the mainDynamicPanel
                 Location selectedLocation = newValue.getValue();
                 dynamicLocationLabel.setText(selectedLocation.getName()); //set Location Label
-                ItemSummaryTable.getItems().clear(); //clear items on location change, then load new items below
+                itemSummaryTable.getItems().clear(); //clear items on location change, then load new items below
                 ResultSet inventory = GetTableData(selectedLocation.getName());
                 try {
                     while(inventory.next()) {
-                        ItemSummaryTable.getItems().add(new Object[]{
+                        itemSummaryTable.getItems().add(new Object[]{
                                 inventory.getInt("ID"),
                                 inventory.getString("Name"),
                                 inventory.getString("Description")

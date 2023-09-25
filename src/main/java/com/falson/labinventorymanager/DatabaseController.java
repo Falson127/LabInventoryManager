@@ -1,8 +1,14 @@
 package com.falson.labinventorymanager;
 
+import java.io.IOException;
 import java.sql.*;
+
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.fxml.FXML;
+import javafx.scene.layout.Pane;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -43,6 +49,8 @@ public class DatabaseController {
             e.printStackTrace();
         }
     }
+
+
     @FXML
     private void onSubmitEntryButtonClick(){
         String locationName = addEntry_Location.getValue();

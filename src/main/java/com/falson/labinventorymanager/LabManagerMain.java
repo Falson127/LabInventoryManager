@@ -11,7 +11,7 @@ public class LabManagerMain extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(LabManagerMain.class.getResource("Home-View.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 600, 400);
+        Scene scene = new Scene(fxmlLoader.load(), 674, 576);
         stage.setTitle("Laboratory Inventory");
         stage.setScene(scene);
         stage.show();
