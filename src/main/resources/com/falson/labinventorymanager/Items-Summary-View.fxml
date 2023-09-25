@@ -2,7 +2,7 @@
 
 <?import javafx.scene.control.*?>
 
-<TableView fx:id="itemSummaryTable" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="425.0" prefWidth="406.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
+<TableView fx:id="itemSummaryTable" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="425.0" prefWidth="406.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.falson.labinventorymanager.DatabaseController">
   <columns>
     <TableColumn fx:id="itemSummaryTableLocation" prefWidth="103.0" text="Location" />
     <TableColumn fx:id="ItemSummaryTableName" prefWidth="99.0" text="Name" />
