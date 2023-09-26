@@ -35,8 +35,10 @@ public class HomeViewController implements Initializable {
         TreeViewFactory factory = new TreeViewFactory();
         factory.GetSortedTreeView(this.locationSelector);
         locationSelector.setCellFactory(tree -> new LocationTreeCell());
+        currentLocation = locationSelector.getRoot().getValue();
         UpdateTableView();
         SetTreeEventWatcher();
+        dynamicLocationLabel.setText(currentLocation.getName());
     }
     public void UpdateTableView(){
         try {
@@ -54,9 +56,9 @@ public class HomeViewController implements Initializable {
                 //code to be executed when item selection is changed
                 //this will generate a query to the database and pull the resulting table into the Items-Summary view
                 //This view must then be loaded into the mainDynamicPanel
-                currentLocation = newValue.getValue();
+                currentLocation = newValue.getValue(); //set current location
                 dynamicLocationLabel.setText(currentLocation.getName()); //set Location Label
-
+                UpdateTableView();
             }
         });
     }
