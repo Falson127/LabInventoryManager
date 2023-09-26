@@ -10,10 +10,11 @@
       <Label layoutX="17.0" layoutY="14.0" text="Name" />
       <TextField fx:id="addEntry_Name" layoutX="17.0" layoutY="35.0" prefHeight="25.0" prefWidth="155.0" />
       <TextField fx:id="addEntry_Category" layoutX="183.0" layoutY="35.0" />
-      <DatePicker fx:id="addEntry_Date" layoutX="14.0" layoutY="91.0" prefHeight="25.0" prefWidth="149.0" />
+      <TextField fx:id="addEntry_Description" layoutX="341.0" layoutY="35.0" />
+      <DatePicker fx:id="addEntry_Date" layoutX="17.0" layoutY="91.0" prefHeight="25.0" prefWidth="149.0"/>
+
       <Label layoutX="14.0" layoutY="66.0" text="Date Received" />
       <Label layoutX="183.0" layoutY="14.0" text="Category" />
-      <TextField fx:id="addEntry_Description" layoutX="341.0" layoutY="35.0" />
       <Label layoutX="341.0" layoutY="14.0" text="Description" />
    </children>
 </AnchorPane>

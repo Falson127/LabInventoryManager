@@ -14,6 +14,7 @@ import java.util.Properties;
 import java.util.ResourceBundle;
 
 public class TableViewController implements Initializable {
+    private static TableViewController instance;
     String url = "jdbc:sqlite:LabInventory.sqlite";
     private Connection connection;
     @FXML
@@ -52,9 +53,13 @@ public class TableViewController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        instance = this;
         itemSummaryTableLocation.setCellValueFactory(new PropertyValueFactory<>("locationName"));
         itemSummaryTableName.setCellValueFactory(new PropertyValueFactory<>("Name"));
         itemSummaryTableDescription.setCellValueFactory(new PropertyValueFactory<>("Description"));
         FillTable();
+    }
+    public static TableViewController getInstance(){
+        return instance;
     }
 }

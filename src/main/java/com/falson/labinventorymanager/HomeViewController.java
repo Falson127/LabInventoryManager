@@ -22,7 +22,7 @@ public class HomeViewController implements Initializable {
 //TODO Change AddLocation to pull parentID from current selected location in tree view, so user doesn't have to keep track of location IDs
 //TODO Change AddEntry to pull location from currently selected location in tree view, to prevent location ambiguity
     public static Location currentLocation;
-
+    private static HomeViewController instance;
     @FXML
     TreeView<Location> locationSelector;
     @FXML
@@ -39,6 +39,7 @@ public class HomeViewController implements Initializable {
         UpdateTableView();
         SetTreeEventWatcher();
         dynamicLocationLabel.setText(currentLocation.getName());
+        instance = this;
     }
     public void UpdateTableView(){
         try {
@@ -98,6 +99,8 @@ public class HomeViewController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
-
+    public static HomeViewController getInstance(){
+        return instance;
+    }
 
 }
