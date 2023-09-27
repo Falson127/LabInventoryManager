@@ -97,6 +97,8 @@ public class DatabaseController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-    addEntry_Date.setValue(LocalDate.now());
+        if (this.addEntry_Date != null) {
+            addEntry_Date.setValue(LocalDate.now());
+        }
     }
 }
