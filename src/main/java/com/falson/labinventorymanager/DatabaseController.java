@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.fxml.FXML;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -20,6 +21,7 @@ import java.util.ResourceBundle;
 
 public class DatabaseController implements Initializable {
     static String url = "jdbc:sqlite:LabInventory.sqlite";
+    private int detailedItemID;
     private Connection connection;
     @FXML
     private TextField addEntry_Name;
@@ -39,6 +41,22 @@ public class DatabaseController implements Initializable {
     private Button addEntry_SubmitButton;
     @FXML
     private Button addLocation_SubmitButton;
+    @FXML
+    private AnchorPane detailView_Anchor;
+    @FXML
+    private Label detailView_Name;
+    @FXML
+    private Label detailView_ID;
+    @FXML
+    private Label detailView_LocationAndID;
+    @FXML
+    private Label detailView_Category;
+    @FXML
+    private Label detailView_DateReceived;
+    @FXML
+    private Label detailView_Description;
+    @FXML
+    private Label detailView_Quantity;
     @FXML
     private void onSubmitLocationButtonClick(){
         String locationName = addLocation_Name.getText() ;
@@ -131,10 +149,37 @@ public class DatabaseController implements Initializable {
                 throw new RuntimeException(e);
             }
     }
+    public void setDetailItemID(int id){
+        detailedItemID = id;
+        try {
+            connection = DriverManager.getConnection(url);
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM Item_Locations WHERE ID = ?");
+            statement.setInt(1,detailedItemID);
+            PopulateDetailView(statement.executeQuery());
+            statement.close();
+            connection.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    private void PopulateDetailView(ResultSet queryResult) throws java.sql.SQLException{
+        Item item = new Item(queryResult.getInt("ID"),queryResult.getString("Name"),queryResult.getString("Category"),queryResult.getString("Description"),
+                queryResult.getString("LocationName"),queryResult.getString("DateReceived"),queryResult.getInt("LocationID"),queryResult.getString("Quantity"));
+        detailView_ID.setText(item.getID().toString());
+        detailView_Name.setText(item.getName());
+        detailView_LocationAndID.setText(String.format("%s (%d)",item.getLocationName(),item.getLocationID()));
+        detailView_Category.setText(item.getCategory());
+        detailView_DateReceived.setText(item.getDateReceived());
+        detailView_Description.setText(item.getDescription());
+        detailView_Quantity.setText(item.getQuantity());
+    }
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    public void initialize(URL urlparam, ResourceBundle resourceBundle) {
         if (this.addEntry_Date != null) {
             addEntry_Date.setValue(LocalDate.now());
+        }
+        if(detailView_Anchor != null){
+
         }
     }
 }
