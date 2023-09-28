@@ -20,8 +20,8 @@ public class Item {
         this.LocationID = locationid;
     }
 
-    public Item(String name, String locationname, String description){
-        this(null,name,null,description,locationname,null,null);
+    public Item(Integer id,String name, String locationname, String description){
+        this(id,name,null,description,locationname,null,null);
     }
     public Integer getID(){
         return ID;

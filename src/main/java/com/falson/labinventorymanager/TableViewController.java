@@ -34,11 +34,11 @@ public class TableViewController implements Initializable {
                 itemSummaryTable.getItems().clear();
             }
             connection = DriverManager.getConnection(url);
-            PreparedStatement retreiveResults = connection.prepareStatement("SELECT LocationName,Name,Description from Item_Locations WHERE LocationID = ?");
+            PreparedStatement retreiveResults = connection.prepareStatement("SELECT LocationName,Name,Description,LocationID from Item_Locations WHERE LocationID = ?");
             retreiveResults.setInt(1,currentLocation.getID());
             ResultSet inventory = retreiveResults.executeQuery();
             while(inventory.next()){
-                Item item = new Item(inventory.getString("Name"),inventory.getString("LocationName"),inventory.getString("Description"));
+                Item item = new Item(inventory.getInt("LocationID"),inventory.getString("Name"),inventory.getString("LocationName"),inventory.getString("Description"));
                 itemSummaryTable.getItems().add(item);
                 itemSummaryTable.refresh();
             }
@@ -54,6 +54,11 @@ public class TableViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         instance = this;
+        itemSummaryTable.setOnMouseClicked(event ->{
+            if (event.getClickCount() == 2){
+                Item selectedItem = itemSummaryTable.getSelectionModel().getSelectedItem();
+            }
+        });
         itemSummaryTableLocation.setCellValueFactory(new PropertyValueFactory<>("locationName"));
         itemSummaryTableName.setCellValueFactory(new PropertyValueFactory<>("Name"));
         itemSummaryTableDescription.setCellValueFactory(new PropertyValueFactory<>("Description"));
