@@ -29,17 +29,34 @@ public class HomeViewController implements Initializable {
     private Pane mainDynamicPanel;
     @FXML
     private Label dynamicLocationLabel;
-
+    @FXML
+    private Button buttonDeleteLocation;
+    @FXML
+    private Button buttonEditEntry;
 
     public void initialize(URL url, ResourceBundle resourceBundle){
-        TreeViewFactory factory = new TreeViewFactory();
-        factory.GetSortedTreeView(this.locationSelector);
-        locationSelector.setCellFactory(tree -> new LocationTreeCell());
-        currentLocation = locationSelector.getRoot().getValue();
+        RebuildTree();
+
         UpdateTableView();
         SetTreeEventWatcher();
         dynamicLocationLabel.setText(currentLocation.getName());
         instance = this;
+    }
+    public void RebuildTree(){
+        TreeViewFactory factory = new TreeViewFactory();
+        factory.GetSortedTreeView(this.locationSelector);
+        locationSelector.setCellFactory(tree -> new LocationTreeCell());
+        currentLocation = locationSelector.getRoot().getValue();
+        expandAllTreeItems(locationSelector.getRoot());
+
+    }
+    private void expandAllTreeItems(TreeItem<Location> item) {
+        if (item != null && !item.isLeaf()) {
+            item.setExpanded(true);
+            for (TreeItem<Location> child : item.getChildren()) {
+                expandAllTreeItems(child);
+            }
+        }
     }
     public void UpdateTableView(){
         try {
@@ -82,7 +99,7 @@ public class HomeViewController implements Initializable {
     private void onAddLocationButtonClick() throws IOException {
         //Location currentLocation = locationSelector.getSelectionModel().getSelectedItem().getValue();
         FXMLLoader fxmlLoader = new FXMLLoader(LabManagerMain.class.getResource("Add-Location-Dialogue.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(),511,149);
+        Scene scene = new Scene(fxmlLoader.load(),282,121);
         Stage stage = new Stage();
         stage.setTitle("Add Location");
         stage.setScene(scene);
@@ -98,6 +115,23 @@ public class HomeViewController implements Initializable {
         stage.setTitle("Add Entry");
         stage.setScene(scene);
         stage.show();
+    }
+    @FXML
+    private void onDeleteLocationButton(){
+        int id = currentLocation.getID();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirm Delete");
+        alert.setContentText(String.format("Warning! You are about to delete the location: '%s'. This action will remove all sub-locations and entries that fall under this location.\nAre you sure you want to continue?",currentLocation.getName()));
+        ButtonType result = alert.showAndWait().orElse(ButtonType.CANCEL);
+
+        if (result == ButtonType.OK){
+            DatabaseController.DeleteLocation(id);
+        }
+        RebuildTree();
+    }
+    @FXML
+    private void onEditEntryButton(){
+
     }
     public static HomeViewController getInstance(){
         return instance;

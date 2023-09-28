@@ -14,7 +14,7 @@ import java.util.Map;
 public class TreeViewFactory {
     String url = "jdbc:sqlite:LabInventory.sqlite";
 
-    private List<Location> GetLocationsList(){
+    public List<Location> GetLocationsList(){
         try {
             Connection connection = DriverManager.getConnection(url);
             PreparedStatement locationRetriever = connection.prepareStatement("SELECT Name, ID, ParentID from locations_index");
