@@ -18,9 +18,6 @@ import java.util.ResourceBundle;
 
 
 public class HomeViewController implements Initializable {
-
-//TODO Change AddLocation to pull parentID from current selected location in tree view, so user doesn't have to keep track of location IDs
-//TODO Change AddEntry to pull location from currently selected location in tree view, to prevent location ambiguity
     public static Location currentLocation;
     private static HomeViewController instance;
     @FXML
