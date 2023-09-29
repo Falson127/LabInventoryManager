@@ -70,7 +70,8 @@ public class TableViewController implements Initializable {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("Item-Detail-View.fxml"));
                     Parent root = loader.load();
                     DatabaseController controller = loader.getController();
-                    controller.setDetailItemID(selectedItem.getID());
+                    controller.setCurrentItemID(selectedItem.getID());
+                    controller.fetchDetailViewData();
                     Scene scene = new Scene(root,231,261);
                     Stage stage = new Stage();
                     stage.sizeToScene();
@@ -87,7 +88,7 @@ public class TableViewController implements Initializable {
         itemSummaryTableDescription.setCellValueFactory(new PropertyValueFactory<>("Description"));
         FillTable();
     }
-    public static TableViewController getInstance(){
+    public TableViewController getInstance(){
         return instance;
     }
 }

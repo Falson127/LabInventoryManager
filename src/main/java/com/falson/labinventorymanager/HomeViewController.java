@@ -19,6 +19,7 @@ import java.util.ResourceBundle;
 
 public class HomeViewController implements Initializable {
     public static Location currentLocation;
+    private TableViewController tableInstance;
     private static HomeViewController instance;
     @FXML
     TreeView<Location> locationSelector;
@@ -59,6 +60,8 @@ public class HomeViewController implements Initializable {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("Items-Summary-View.fxml"));
             Parent root = loader.load();
+            TableViewController controller = loader.getController();
+            tableInstance = controller.getInstance();
             mainDynamicPanel.getChildren().clear();
             mainDynamicPanel.getChildren().add(root);
         } catch (IOException e) {
@@ -91,6 +94,10 @@ public class HomeViewController implements Initializable {
             e.printStackTrace();
             return null;
         }
+    }
+    @FXML
+    private void onSearchBarAction(){
+
     }
     @FXML
     private void onAddLocationButtonClick() throws IOException {
@@ -127,8 +134,18 @@ public class HomeViewController implements Initializable {
         RebuildTree();
     }
     @FXML
-    private void onEditEntryButton(){
-
+    private void onEditEntryButton() throws IOException{
+        Item currentItem = tableInstance.itemSummaryTable.getSelectionModel().getSelectedItem();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Item-Edit-View.fxml"));
+        Parent root = loader.load();
+        DatabaseController controller = loader.getController();
+        controller.setCurrentItemID(currentItem.getID());
+        controller.fetchEditViewData();
+        Scene scene = new Scene(root,511,149);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.setTitle("Edit Entry");
+        stage.show();
     }
     public static HomeViewController getInstance(){
         return instance;

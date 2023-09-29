@@ -21,7 +21,7 @@ import java.util.ResourceBundle;
 
 public class DatabaseController implements Initializable {
     static String url = "jdbc:sqlite:LabInventory.sqlite";
-    private int detailedItemID;
+    private int currentItem;
     private Connection connection;
     @FXML
     private TextField addEntry_Name;
@@ -30,9 +30,13 @@ public class DatabaseController implements Initializable {
     @FXML
     private TextField addEntry_Category;
     @FXML
+    private TextField addEntry_Quantity;
+    @FXML
     private Button addEntry_CancelButton;
     @FXML
     private Button addLocation_CancelButton;
+    @FXML
+    private Button editEntry_CancelButton;
     @FXML
     private DatePicker addEntry_Date;
     @FXML
@@ -40,9 +44,23 @@ public class DatabaseController implements Initializable {
     @FXML
     private Button addEntry_SubmitButton;
     @FXML
-    private Button addLocation_SubmitButton;
+    private AnchorPane editEntry_Anchor;
     @FXML
-    private AnchorPane detailView_Anchor;
+    private Label editEntry_IDLabel;
+    @FXML
+    private TextField editEntry_Name;
+    @FXML
+    private TextField editEntry_Description;
+    @FXML
+    private TextField editEntry_Category;
+    @FXML
+    private TextField editEntry_Quantity;
+    @FXML
+    private DatePicker editEntry_Date;
+    @FXML
+    private Button editEntry_SubmitButton;
+    @FXML
+    private Button addLocation_SubmitButton;
     @FXML
     private Label detailView_Name;
     @FXML
@@ -80,14 +98,13 @@ public class DatabaseController implements Initializable {
             e.printStackTrace();
         }
     }
-
-
     @FXML
     private void onSubmitEntryButtonClick(){
         String locationName = HomeViewController.currentLocation.getName();
         String Name = addEntry_Name.getText();
         String Category = addEntry_Category.getText();
         String Description = addEntry_Description.getText();
+        String Quantity = addEntry_Quantity.getText();
         Integer LocationID = HomeViewController.currentLocation.getID();
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
@@ -97,13 +114,14 @@ public class DatabaseController implements Initializable {
             String DateString = Date.format(formatter);
             String url = "jdbc:sqlite:LabInventory.sqlite";
             connection = DriverManager.getConnection(url);
-            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO Item_Locations(Name,Category,Description,LocationName,DateReceived,LocationID) VALUES(?,?,?,?,?,?)");
+            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO Item_Locations(Name,Category,Description,LocationName,DateReceived,LocationID,Quantity) VALUES(?,?,?,?,?,?,?)");
             preparedStatement.setString(1,Name);
             preparedStatement.setString(2,Category);
             preparedStatement.setString(3,Description);
             preparedStatement.setString(4,locationName);
             preparedStatement.setString(5,DateString);
             preparedStatement.setInt(6,LocationID);
+            preparedStatement.setString(7,Quantity);
             preparedStatement.executeUpdate();
             preparedStatement.close();
             connection.close();
@@ -119,13 +137,41 @@ public class DatabaseController implements Initializable {
     }
 
     @FXML
-    private void onCancelEntryButtonClick(){
-        Stage stage = (Stage) addEntry_CancelButton.getScene().getWindow();
+    private void onEditSubmitButtonClick(){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        try {
+            connection = DriverManager.getConnection(url);
+            PreparedStatement statement = connection.prepareStatement("UPDATE Item_Locations SET Name=?,Category=?,Description=?,DateReceived=?,Quantity=? WHERE ID = ?");
+            statement.setString(1,editEntry_Name.getText());
+            statement.setString(2,editEntry_Category.getText());
+            statement.setString(3,editEntry_Description.getText());
+            statement.setString(4,formatter.format(editEntry_Date.getValue()));
+            statement.setString(5,editEntry_Quantity.getText());
+            statement.setInt(6,Integer.parseInt(editEntry_IDLabel.getText()));
+            statement.executeUpdate();
+            statement.close();
+            connection.close();
+            HomeViewController instance = HomeViewController.getInstance();
+            instance.UpdateTableView();
+            Stage stage = (Stage) editEntry_SubmitButton.getScene().getWindow();
+            stage.close();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+    @FXML
+    private void onEditCancelButtonClick(){
+        Stage stage = (Stage) editEntry_CancelButton.getScene().getWindow();
         stage.close();
     }
     @FXML
     private void onCancelLocationButtonClick(){
         Stage stage = (Stage) addLocation_CancelButton.getScene().getWindow();
+        stage.close();
+    }
+    @FXML
+    private void onCancelEntryButtonClick(){
+        Stage stage = (Stage) addEntry_CancelButton.getScene().getWindow();
         stage.close();
     }
     public static void DeleteLocation(int LocationID){
@@ -149,18 +195,43 @@ public class DatabaseController implements Initializable {
                 throw new RuntimeException(e);
             }
     }
-    public void setDetailItemID(int id){
-        detailedItemID = id;
+    public static void DeleteEntry(){    }
+    public void setCurrentItemID(int id){
+        currentItem = id;
+    }
+    public void fetchDetailViewData(){
         try {
             connection = DriverManager.getConnection(url);
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM Item_Locations WHERE ID = ?");
-            statement.setInt(1,detailedItemID);
+            statement.setInt(1,currentItem);
             PopulateDetailView(statement.executeQuery());
             statement.close();
             connection.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+    public void fetchEditViewData(){
+        try {
+            connection = DriverManager.getConnection(url);
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM Item_Locations WHERE ID = ?");
+            statement.setInt(1,currentItem);
+            PopulateEditView(statement.executeQuery());
+            statement.close();
+            connection.close();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+    private void PopulateEditView(ResultSet qR) throws SQLException{
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        Item currentItem = new Item(qR.getInt("ID"),qR.getString("Name"),qR.getString("Category"),qR.getString("Description"),qR.getString("LocationName"),qR.getString("DateReceived"),qR.getInt("LocationID"),qR.getString("Quantity"));
+        editEntry_Name.setText(currentItem.getName());
+        editEntry_Description.setText(currentItem.getDescription());
+        editEntry_Date.setValue(LocalDate.parse(currentItem.getDateReceived(),formatter));
+        editEntry_Category.setText(currentItem.getCategory());
+        editEntry_Quantity.setText(currentItem.getQuantity());
+        editEntry_IDLabel.setText(currentItem.getID().toString());
     }
     private void PopulateDetailView(ResultSet queryResult) throws java.sql.SQLException{
         Item item = new Item(queryResult.getInt("ID"),queryResult.getString("Name"),queryResult.getString("Category"),queryResult.getString("Description"),
@@ -177,9 +248,6 @@ public class DatabaseController implements Initializable {
     public void initialize(URL urlparam, ResourceBundle resourceBundle) {
         if (this.addEntry_Date != null) {
             addEntry_Date.setValue(LocalDate.now());
-        }
-        if(detailView_Anchor != null){
-
         }
     }
 }

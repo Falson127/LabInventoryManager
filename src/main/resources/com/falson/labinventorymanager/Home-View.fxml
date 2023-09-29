@@ -8,7 +8,7 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="581.0" prefWidth="592.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.falson.labinventorymanager.HomeViewController">
    <children>
-      <TextField fx:id="mainSearchBar" layoutX="316.0" layoutY="36.0" prefHeight="25.0" prefWidth="253.0" />
+      <TextField fx:id="homeSearchBar" layoutX="316.0" layoutY="36.0" onAction="#onSearchBarAction" prefHeight="25.0" prefWidth="253.0" promptText="Search" />
       <Label layoutX="272.0" layoutY="40.0" text="Search" />
       <Label layoutX="14.0" layoutY="79.0" text="Current Location:" />
       <Label fx:id="dynamicLocationLabel" layoutX="109.0" layoutY="79.0" text="Location" />
