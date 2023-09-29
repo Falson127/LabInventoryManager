@@ -27,7 +27,8 @@
       <Button fx:id="buttonAddLocation" layoutX="7.0" layoutY="529.0" minWidth="24.208" mnemonicParsing="false" onAction="#onAddLocationButtonClick" text="+" />
       <Button fx:id="buttonDeleteLocation" layoutX="34.0" layoutY="529.0" minWidth="24.208" mnemonicParsing="false" onAction="#onDeleteLocationButton" text="-" />
       <TreeView fx:id="locationSelector" layoutX="7.0" layoutY="100.0" prefHeight="425.0" prefWidth="147.0" />
-      <Button fx:id="buttonAddEntry" layoutX="426.0" layoutY="529.0" mnemonicParsing="false" onAction="#onAddEntryButtonClick" text="Add Entry" />
-      <Button fx:id="buttonEditEntry" layoutX="501.0" layoutY="529.0" mnemonicParsing="false" onAction="#onEditEntryButton" text="Edit Entry" />
+      <Button fx:id="buttonAddEntry" layoutX="342.0" layoutY="529.0" mnemonicParsing="false" onAction="#onAddEntryButtonClick" text="Add Entry" />
+      <Button fx:id="buttonEditEntry" layoutX="417.0" layoutY="529.0" mnemonicParsing="false" onAction="#onEditEntryButton" text="Edit Entry" />
+      <Button fx:id="buttonDeleteEntry" layoutX="491.0" layoutY="529.0" mnemonicParsing="false" onAction="#onDeleteEntryButton" text="Delete Entry" />
    </children>
 </Pane>

@@ -195,10 +195,19 @@ public class DatabaseController implements Initializable {
                 throw new RuntimeException(e);
             }
     }
-    public static void DeleteEntry(){    }
-    public void setCurrentItemID(int id){
-        currentItem = id;
+    public void DeleteEntry(int itemID){
+        try {
+            connection = DriverManager.getConnection(url);
+            PreparedStatement statement = connection.prepareStatement("DELETE FROM Item_Locations WHERE ID = ?");
+            statement.setInt(1,itemID);
+            statement.execute();
+            statement.close();
+            connection.close();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
+    public void setCurrentItemID(int id){currentItem = id;}
     public void fetchDetailViewData(){
         try {
             connection = DriverManager.getConnection(url);

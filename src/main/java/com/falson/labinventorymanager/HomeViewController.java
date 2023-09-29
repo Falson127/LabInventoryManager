@@ -134,6 +134,21 @@ public class HomeViewController implements Initializable {
         RebuildTree();
     }
     @FXML
+    private void onDeleteEntryButton(){
+        Item currentItem = tableInstance.itemSummaryTable.getSelectionModel().getSelectedItem();
+        DatabaseController controller = new DatabaseController();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirm Delete");
+        alert.setContentText(String.format("Warning! You are about to delete the Item: '%s'. This action cannot be undone. Do you wish to continue?",currentItem.getName()));
+        ButtonType result = alert.showAndWait().orElse(ButtonType.CANCEL);
+
+        if (result == ButtonType.OK) {
+            controller.DeleteEntry(currentItem.getID());
+            UpdateTableView();
+        }
+
+    }
+    @FXML
     private void onEditEntryButton() throws IOException{
         Item currentItem = tableInstance.itemSummaryTable.getSelectionModel().getSelectedItem();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Item-Edit-View.fxml"));
