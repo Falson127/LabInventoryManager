@@ -7,17 +7,17 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.*;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class HomeViewController implements Initializable {
+    private static final Logger logger = Logger.getLogger(TableViewController.class.getName());
     public static Location currentLocation;
     private TableViewController tableInstance;
     private static HomeViewController instance;
@@ -27,10 +27,6 @@ public class HomeViewController implements Initializable {
     private Pane mainDynamicPanel;
     @FXML
     private Label dynamicLocationLabel;
-    @FXML
-    private Button buttonDeleteLocation;
-    @FXML
-    private Button buttonEditEntry;
     @FXML
     private TextField homeSearchBar;
     public void initialize(URL url, ResourceBundle resourceBundle){
@@ -68,7 +64,7 @@ public class HomeViewController implements Initializable {
             mainDynamicPanel.getChildren().clear();
             mainDynamicPanel.getChildren().add(root);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING,"IOException being caused by UpdateTableView method call");
         }
     }
     private void SetTreeEventWatcher() {
@@ -83,19 +79,7 @@ public class HomeViewController implements Initializable {
             }
         });
     }
-    private ResultSet GetTableData(String location){
-        try {
-            String url = "jdbc:sqlite:LabInventory.sqlite";
-            Connection connection = DriverManager.getConnection(url);
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT (ID,Name, Description) FROM Item_Locations WHERE LocationName = ?");
-            preparedStatement.setString(1,location);
-            return preparedStatement.executeQuery();
-        }
-        catch(SQLException e){
-            e.printStackTrace();
-            return null;
-        }
-    }
+
     @FXML
     private void onSearchBarAction(){
         try {
@@ -110,7 +94,7 @@ public class HomeViewController implements Initializable {
             mainDynamicPanel.getChildren().clear();
             mainDynamicPanel.getChildren().add(root);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING,"IOException caused by onSearchBarAction method");
         }
     }
     @FXML
