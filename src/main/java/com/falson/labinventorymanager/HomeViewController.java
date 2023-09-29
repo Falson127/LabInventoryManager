@@ -31,7 +31,8 @@ public class HomeViewController implements Initializable {
     private Button buttonDeleteLocation;
     @FXML
     private Button buttonEditEntry;
-
+    @FXML
+    private TextField homeSearchBar;
     public void initialize(URL url, ResourceBundle resourceBundle){
         RebuildTree();
 
@@ -59,9 +60,11 @@ public class HomeViewController implements Initializable {
     public void UpdateTableView(){
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("Items-Summary-View.fxml"));
-            Parent root = loader.load();
+            Parent root = loader.load(); //controller instance is made here
             TableViewController controller = loader.getController();
             tableInstance = controller.getInstance();
+            tableInstance.setCallingMethod("Standard");
+            tableInstance.FillTable();//required now that FillTable is no longer run auto by initialization
             mainDynamicPanel.getChildren().clear();
             mainDynamicPanel.getChildren().add(root);
         } catch (IOException e) {
@@ -80,8 +83,6 @@ public class HomeViewController implements Initializable {
             }
         });
     }
-
-
     private ResultSet GetTableData(String location){
         try {
             String url = "jdbc:sqlite:LabInventory.sqlite";
@@ -97,7 +98,20 @@ public class HomeViewController implements Initializable {
     }
     @FXML
     private void onSearchBarAction(){
-
+        try {
+            String userInput = homeSearchBar.getText();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Items-Summary-View.fxml"));
+            Parent root = loader.load(); //controller instance is made here
+            TableViewController controller = loader.getController();
+            tableInstance = controller.getInstance();
+            tableInstance.setCallingMethod("Search");//required to direct FillTable down correct path
+            tableInstance.setUserInput(userInput);//required to pass input to instance for database access
+            tableInstance.FillTable();//required now that FillTable is no longer run auto by initialization
+            mainDynamicPanel.getChildren().clear();
+            mainDynamicPanel.getChildren().add(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     @FXML
     private void onAddLocationButtonClick() throws IOException {

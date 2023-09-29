@@ -23,6 +23,8 @@ import java.util.logging.Logger;
 public class TableViewController implements Initializable {
     private static final Logger logger = Logger.getLogger(TableViewController.class.getName());
     private static TableViewController instance;
+    private String callingMethod;
+    private String userInput;
 
     String url = "jdbc:sqlite:LabInventory.sqlite";
     private Connection connection;
@@ -34,32 +36,53 @@ public class TableViewController implements Initializable {
     TableColumn<Item, String> itemSummaryTableName;
     @FXML
     TableColumn<Item, String> itemSummaryTableDescription;
+    @SuppressWarnings("Duplicates")
     public void FillTable(){
-        //location, name, description
-        Location currentLocation = HomeViewController.currentLocation;
-
-        try {
-            if(itemSummaryTable != null){
-                itemSummaryTable.getItems().clear();
-            }
-            connection = DriverManager.getConnection(url);
-            PreparedStatement retreiveResults = connection.prepareStatement("SELECT ID,LocationName,Name,Description,LocationID from Item_Locations WHERE LocationID = ?");
-            retreiveResults.setInt(1,currentLocation.getID());
-            ResultSet inventory = retreiveResults.executeQuery();
-            while(inventory.next()){
-                Item item = new Item(inventory.getInt("ID"),inventory.getString("Name"),inventory.getString("LocationName"),inventory.getString("Description"),inventory.getInt("LocationID"));
-                itemSummaryTable.getItems().add(item);
-                itemSummaryTable.refresh();
-            }
-            retreiveResults.close();
-            connection.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        if(itemSummaryTable != null){
+            itemSummaryTable.getItems().clear();
         }
-
-
+        if (callingMethod.equals("Standard")) {
+            Location currentLocation = HomeViewController.currentLocation;
+            try {
+                connection = DriverManager.getConnection(url);
+                PreparedStatement retreiveResults = connection.prepareStatement("SELECT ID,LocationName,Name,Description,LocationID from Item_Locations WHERE LocationID = ?");
+                retreiveResults.setInt(1,currentLocation.getID());
+                ResultSet inventory = retreiveResults.executeQuery();
+                while(inventory.next()){
+                    Item item = new Item(inventory.getInt("ID"),inventory.getString("Name"),inventory.getString("LocationName"),inventory.getString("Description"),inventory.getInt("LocationID"));
+                    itemSummaryTable.getItems().add(item);
+                    itemSummaryTable.refresh();
+                }
+                retreiveResults.close();
+                connection.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }else{
+            try{
+                connection = DriverManager.getConnection(url);
+                PreparedStatement retreiveResults = connection.prepareStatement("SELECT ID, LocationName,Name,Description,LocationID FROM Item_Locations WHERE Name LIKE ?");
+                String searchTerm = '%' + userInput + '%';
+                retreiveResults.setString(1,searchTerm);
+                ResultSet inventory = retreiveResults.executeQuery();
+                while(inventory.next()){
+                    Item item = new Item(inventory.getInt("ID"),inventory.getString("Name"),inventory.getString("LocationName"),inventory.getString("Description"),inventory.getInt("LocationID"));
+                    itemSummaryTable.getItems().add(item);
+                    itemSummaryTable.refresh();
+                }
+                retreiveResults.close();
+                connection.close();
+            }catch(SQLException e){
+                throw new RuntimeException(e);
+            }
+        }
     }
-
+    public void setCallingMethod(String method){
+        callingMethod = method;
+    }
+    public void setUserInput(String input){
+        userInput = input;
+    }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         instance = this;
@@ -86,7 +109,6 @@ public class TableViewController implements Initializable {
         itemSummaryTableLocation.setCellValueFactory(new PropertyValueFactory<>("locationName"));
         itemSummaryTableName.setCellValueFactory(new PropertyValueFactory<>("Name"));
         itemSummaryTableDescription.setCellValueFactory(new PropertyValueFactory<>("Description"));
-        FillTable();
     }
     public TableViewController getInstance(){
         return instance;
