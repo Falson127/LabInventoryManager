@@ -1,11 +1,15 @@
 package com.falson.labinventorymanager;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
@@ -29,13 +33,16 @@ public class HomeViewController implements Initializable {
     private Label dynamicLocationLabel;
     @FXML
     private TextField homeSearchBar;
+    @FXML
+    private Button addEntryButton;
+    private BooleanProperty shiftPressed = new SimpleBooleanProperty(false);
     public void initialize(URL url, ResourceBundle resourceBundle){
         RebuildTree();
-
         UpdateTableView();
         SetTreeEventWatcher();
         dynamicLocationLabel.setText(currentLocation.getName());
         instance = this;
+
     }
     public void RebuildTree(){
         TreeViewFactory factory = new TreeViewFactory();
@@ -109,8 +116,16 @@ public class HomeViewController implements Initializable {
 
     }
     @FXML
+    private void onBulkEntryMenuItem() throws IOException{
+        FXMLLoader fxmlLoader = new FXMLLoader(LabManagerMain.class.getResource("Add-Entry-Bulk.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(),600,400);
+        Stage stage = new Stage();
+        stage.setTitle("Add Entry - Bulk");
+        stage.setScene(scene);
+        stage.show();
+    }
+    @FXML
     private void onAddEntryButtonClick() throws IOException{
-        //Location currentLocation = locationSelector.getSelectionModel().getSelectedItem().getValue();
         FXMLLoader fxmlLoader = new FXMLLoader(LabManagerMain.class.getResource("Add-Entry-Dialogue.fxml"));
         Scene scene = new Scene(fxmlLoader.load(),511,149);
         Stage stage = new Stage();
