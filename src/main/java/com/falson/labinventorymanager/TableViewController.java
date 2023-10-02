@@ -24,7 +24,7 @@ public class TableViewController implements Initializable {
     private static final Logger logger = Logger.getLogger(TableViewController.class.getName());
     private static TableViewController instance;
     private String callingMethod;
-    private String userInput;
+    private String userInput = "";
 
     String url = "jdbc:sqlite:LabInventory.sqlite";
     private Connection connection;
@@ -41,7 +41,7 @@ public class TableViewController implements Initializable {
         if(itemSummaryTable != null){
             itemSummaryTable.getItems().clear();
         }
-        if (callingMethod.equals("Standard")) {
+        if (callingMethod.equals("Standard") || userInput.isEmpty()) {
             Location currentLocation = HomeViewController.currentLocation;
             try {
                 connection = DriverManager.getConnection(url);
@@ -61,9 +61,10 @@ public class TableViewController implements Initializable {
         }else{
             try{
                 connection = DriverManager.getConnection(url);
-                PreparedStatement retreiveResults = connection.prepareStatement("SELECT ID, LocationName,Name,Description,LocationID FROM Item_Locations WHERE Name LIKE ?");
+                PreparedStatement retreiveResults = connection.prepareStatement("SELECT ID, LocationName,Name,Description,LocationID FROM Item_Locations WHERE Name LIKE ? OR Description LIKE ?");
                 String searchTerm = '%' + userInput + '%';
                 retreiveResults.setString(1,searchTerm);
+                retreiveResults.setString(2,searchTerm);
                 ResultSet inventory = retreiveResults.executeQuery();
                 while(inventory.next()){
                     Item item = new Item(inventory.getInt("ID"),inventory.getString("Name"),inventory.getString("LocationName"),inventory.getString("Description"),inventory.getInt("LocationID"));
