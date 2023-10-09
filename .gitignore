@@ -36,3 +36,18 @@ build/
 
 ### Mac OS ###
 .DS_Store
+/out/artifacts/LabInventoryManager_jar/controlsfx-11.1.2.jar
+/out/artifacts/LabInventoryManager_jar/formsfx-core-11.6.0.jar
+/out/artifacts/LabInventoryManager_jar/javafx-base-20.0.1.jar
+/out/artifacts/LabInventoryManager_jar/javafx-base-20.0.1-win.jar
+/out/artifacts/LabInventoryManager_jar/javafx-controls-20.0.1.jar
+/out/artifacts/LabInventoryManager_jar/javafx-controls-20.0.1-win.jar
+/out/artifacts/LabInventoryManager_jar/javafx-fxml-20.0.1.jar
+/out/artifacts/LabInventoryManager_jar/javafx-fxml-20.0.1-win.jar
+/out/artifacts/LabInventoryManager_jar/javafx-graphics-20.0.1.jar
+/out/artifacts/LabInventoryManager_jar/javafx-graphics-20.0.1-win.jar
+/out/artifacts/LabInventoryManager_jar/LabInventoryManager.jar
+/out/artifacts/LabInventoryManager_jar_extracted_/LabInventoryManager.jar
+/.idea/artifacts/LabInventoryManager_jar_extracted_.xml
+/src/main/resources/META-INF/MANIFEST.MF
+/out/artifacts/LabInventoryManager_jar/sqlite-jdbc-3.43.0.0.jar

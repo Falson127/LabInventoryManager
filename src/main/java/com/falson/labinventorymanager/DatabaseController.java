@@ -16,12 +16,16 @@ import javafx.stage.Stage;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class DatabaseController implements Initializable {
     static String url = "jdbc:sqlite:LabInventory.sqlite";
     private int currentItem;
+    private static final Logger logger = Logger.getLogger(TableViewController.class.getName());
     private Connection connection;
     @FXML
     private TextField addEntry_Name;
@@ -75,6 +79,12 @@ public class DatabaseController implements Initializable {
     private Label detailView_Description;
     @FXML
     private Label detailView_Quantity;
+    @FXML
+    private TextArea bulkTextArea;
+    @FXML
+    private Button bulkCancel;
+    @FXML
+    private Button bulkSubmit;
     @FXML
     private void onSubmitLocationButtonClick(){
         String locationName = addLocation_Name.getText() ;
@@ -135,7 +145,6 @@ public class DatabaseController implements Initializable {
         }
 
     }
-
     @FXML
     private void onEditSubmitButtonClick(){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
@@ -231,6 +240,44 @@ public class DatabaseController implements Initializable {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+    @FXML
+    private void CancelBulkSubmit(){
+        Stage stage = (Stage) bulkCancel.getScene().getWindow();
+        stage.close();
+    }
+    @FXML
+    private void BulkSubmit(){
+        //Bulk Add Syntax: LocationID, Name, Category, Description, LocationName, Quantity, Date Received
+        String rawText = bulkTextArea.getText();
+        List<String> lines = new ArrayList<>();
+        lines.addAll(Arrays.asList(rawText.split("\\n"))); //split text area into individual lines
+        for (String line: lines) {
+            List<String> variables = new ArrayList<>();
+            variables.addAll(Arrays.asList(line.split(",")));//split each line on comma to get individual variables for SQL query
+            try{
+                connection = DriverManager.getConnection(url);
+                PreparedStatement statement = connection.prepareStatement("INSERT INTO Item_Locations(Name,Category,Description,LocationName,LocationID,DateReceived,Quantity) Values(?,?,?,?,?,?,?)");
+                statement.setString(1,variables.get(1));
+                statement.setString(2,variables.get(2));
+                statement.setString(3, variables.get(3));
+                statement.setString(4,variables.get(4));
+                statement.setInt(5,Integer.parseInt(variables.get(0)));
+                statement.setString(6,variables.get(6));
+                statement.setString(7,variables.get(5));
+                statement.execute();
+                statement.close();
+                connection.close();
+            }catch(SQLException e){
+                logger.log(Level.WARNING,"Error with SQL prepared statement. Likely an entry was formatted incorrectly on one or more lines.");
+                throw new RuntimeException();
+            }
+        }
+        //runs after all entries have finished
+        HomeViewController instance = HomeViewController.getInstance();
+        instance.UpdateTableView();
+        Stage stage = (Stage) bulkSubmit.getScene().getWindow();
+        stage.close();
     }
     private void PopulateEditView(ResultSet qR) throws SQLException{
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
