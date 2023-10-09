@@ -8,6 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
@@ -113,6 +114,19 @@ public class TableViewController implements Initializable {
         itemSummaryTableLocation.setCellValueFactory(new PropertyValueFactory<>("locationName"));
         itemSummaryTableName.setCellValueFactory(new PropertyValueFactory<>("Name"));
         itemSummaryTableDescription.setCellValueFactory(new PropertyValueFactory<>("Description"));
+        itemSummaryTable.setRowFactory(tv -> {
+            TableRow<Item> row = new TableRow<>();
+            row.itemProperty().addListener((obs, oldItem, newItem) -> {
+                if (newItem != null){
+                    if (newItem.getQuantity() < newItem.getThreshold()){
+                        row.setStyle("-fx-background-color: red")   ;
+                    }else{
+                        row.setStyle("");
+                    }
+                }
+            });
+            return row;
+        });
     }
     public TableViewController getInstance(){
         return instance;

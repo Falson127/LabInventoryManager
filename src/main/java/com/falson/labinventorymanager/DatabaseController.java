@@ -281,24 +281,24 @@ public class DatabaseController implements Initializable {
     }
     private void PopulateEditView(ResultSet qR) throws SQLException{
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-        Item currentItem = new Item(qR.getInt("ID"),qR.getString("Name"),qR.getString("Category"),qR.getString("Description"),qR.getString("LocationName"),qR.getString("DateReceived"),qR.getInt("LocationID"),qR.getString("Quantity"));
+        Item currentItem = new Item(qR.getInt("ID"),qR.getString("Name"),qR.getString("Category"),qR.getString("Description"),qR.getString("LocationName"),qR.getString("DateReceived"),qR.getInt("LocationID"),qR.getInt("Quantity"),qR.getInt("Threshold"),qR.getString("Unit"));
         editEntry_Name.setText(currentItem.getName());
         editEntry_Description.setText(currentItem.getDescription());
         editEntry_Date.setValue(LocalDate.parse(currentItem.getDateReceived(),formatter));
         editEntry_Category.setText(currentItem.getCategory());
-        editEntry_Quantity.setText(currentItem.getQuantity());
+        editEntry_Quantity.setText(Integer.toString(currentItem.getQuantity()));
         editEntry_IDLabel.setText(currentItem.getID().toString());
     }
     private void PopulateDetailView(ResultSet queryResult) throws java.sql.SQLException{
         Item item = new Item(queryResult.getInt("ID"),queryResult.getString("Name"),queryResult.getString("Category"),queryResult.getString("Description"),
-                queryResult.getString("LocationName"),queryResult.getString("DateReceived"),queryResult.getInt("LocationID"),queryResult.getString("Quantity"));
+                queryResult.getString("LocationName"),queryResult.getString("DateReceived"),queryResult.getInt("LocationID"),queryResult.getInt("Quantity"),queryResult.getInt("Threshold"),queryResult.getString("Unit"));
         detailView_ID.setText(item.getID().toString());
         detailView_Name.setText(item.getName());
         detailView_LocationAndID.setText(String.format("%s (%d)",item.getLocationName(),item.getLocationID()));
         detailView_Category.setText(item.getCategory());
         detailView_DateReceived.setText(item.getDateReceived());
         detailView_Description.setText(item.getDescription());
-        detailView_Quantity.setText(item.getQuantity());
+        detailView_Quantity.setText(Integer.toString(item.getQuantity()));
     }
     @Override
     public void initialize(URL urlparam, ResourceBundle resourceBundle) {

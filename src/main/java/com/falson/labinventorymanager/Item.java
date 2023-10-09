@@ -9,9 +9,11 @@ public class Item {
 
     private final String DateReceived;
     private final Integer LocationID;
-    private final String Quantity;
+    private final Integer Quantity;
+    private final Integer Threshold;
+    private final String Unit;
 
-    public Item(Integer id, String name, String category, String description, String locationname, String datereceived, Integer locationid, String quantity){
+    public Item(Integer id, String name, String category, String description, String locationname, String datereceived, Integer locationid, Integer quantity, Integer threshold, String unit){
         this.ID = id;
         this.Name = name;
         this.Category = category;
@@ -20,10 +22,12 @@ public class Item {
         this.DateReceived = datereceived;
         this.LocationID = locationid;
         this.Quantity = quantity;
+        this.Threshold = threshold;
+        this.Unit = unit;
     }
 
     public Item(Integer id,String name, String locationname, String description,Integer locationID){
-        this(id,name,null,description,locationname,null,locationID,null);
+        this(id,name,null,description,locationname,null,locationID,null,null,null);
     }
     public Integer getID(){
         return ID;
@@ -46,6 +50,8 @@ public class Item {
     public String getDateReceived(){
         return DateReceived;
     }
-    public String getQuantity(){return Quantity;}
+    public Integer getQuantity(){return Quantity;}
+    public Integer getThreshold(){return Threshold;}
+    public String getUnit(){return Unit;}
 }
 
