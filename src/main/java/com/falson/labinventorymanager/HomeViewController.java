@@ -42,7 +42,6 @@ public class HomeViewController implements Initializable {
         UpdateTableView();
         SetTreeEventWatcher();
         dynamicLocationLabel.setText(currentLocation.getName());
-        mainDynamicPanel.setStyle("-fx-background-color: #ff0000;");
         instance = this;
 
     }
@@ -72,14 +71,16 @@ public class HomeViewController implements Initializable {
             tableInstance.FillTable();//required now that FillTable is no longer run auto by initialization
             mainDynamicPanel.getChildren().clear();
             mainDynamicPanel.getChildren().add(root);
-            mainDynamicPanel.setTopAnchor(root,0.0);
-            mainDynamicPanel.setBottomAnchor(root,0.0);
-            mainDynamicPanel.setLeftAnchor(root,0.0);
-            mainDynamicPanel.setRightAnchor(root,0.0);
+            setDynamicPaneScaling(root);
         } catch (IOException e) {
             logger.log(Level.WARNING,"IOException being caused by UpdateTableView method call");
         }
-
+    }
+    private void setDynamicPaneScaling(Parent root){
+        mainDynamicPanel.setTopAnchor(root,0.0);
+        mainDynamicPanel.setBottomAnchor(root,0.0);
+        mainDynamicPanel.setLeftAnchor(root,0.0);
+        mainDynamicPanel.setRightAnchor(root,0.0);
     }
     private void SetTreeEventWatcher() {
         locationSelector.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
@@ -107,6 +108,7 @@ public class HomeViewController implements Initializable {
             tableInstance.FillTable();//required now that FillTable is no longer run auto by initialization
             mainDynamicPanel.getChildren().clear();
             mainDynamicPanel.getChildren().add(root);
+            setDynamicPaneScaling(root);
         } catch (IOException e) {
             logger.log(Level.WARNING,"IOException caused by onSearchBarAction method");
         }
