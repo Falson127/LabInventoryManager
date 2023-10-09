@@ -95,7 +95,7 @@ public class TableViewController implements Initializable {
                     DatabaseController controller = loader.getController();
                     controller.setCurrentItemID(selectedItem.getID());
                     controller.fetchDetailViewData();
-                    Scene scene = new Scene(root,231,261);
+                    Scene scene = new Scene(root);
                     Stage stage = new Stage();
                     stage.sizeToScene();
                     stage.setScene(scene);
