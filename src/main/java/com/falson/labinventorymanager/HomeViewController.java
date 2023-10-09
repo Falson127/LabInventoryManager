@@ -11,6 +11,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -28,7 +29,7 @@ public class HomeViewController implements Initializable {
     @FXML
     TreeView<Location> locationSelector;
     @FXML
-    private Pane mainDynamicPanel;
+    private AnchorPane mainDynamicPanel;
     @FXML
     private Label dynamicLocationLabel;
     @FXML
@@ -41,6 +42,7 @@ public class HomeViewController implements Initializable {
         UpdateTableView();
         SetTreeEventWatcher();
         dynamicLocationLabel.setText(currentLocation.getName());
+        mainDynamicPanel.setStyle("-fx-background-color: #ff0000;");
         instance = this;
 
     }
@@ -70,9 +72,14 @@ public class HomeViewController implements Initializable {
             tableInstance.FillTable();//required now that FillTable is no longer run auto by initialization
             mainDynamicPanel.getChildren().clear();
             mainDynamicPanel.getChildren().add(root);
+            mainDynamicPanel.setTopAnchor(root,0.0);
+            mainDynamicPanel.setBottomAnchor(root,0.0);
+            mainDynamicPanel.setLeftAnchor(root,0.0);
+            mainDynamicPanel.setRightAnchor(root,0.0);
         } catch (IOException e) {
             logger.log(Level.WARNING,"IOException being caused by UpdateTableView method call");
         }
+
     }
     private void SetTreeEventWatcher() {
         locationSelector.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {

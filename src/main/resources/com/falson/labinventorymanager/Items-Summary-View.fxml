@@ -2,10 +2,10 @@
 
 <?import javafx.scene.control.*?>
 
-<TableView fx:id="itemSummaryTable" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="425.0" prefWidth="406.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.falson.labinventorymanager.TableViewController">
+<TableView fx:id="itemSummaryTable" maxHeight="-Infinity" maxWidth="-Infinity" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.falson.labinventorymanager.TableViewController">
   <columns>
     <TableColumn fx:id="itemSummaryTableLocation" editable="false" prefWidth="103.0" text="Location" />
     <TableColumn fx:id="itemSummaryTableName" editable="false" prefWidth="99.0" text="Name" />
-    <TableColumn fx:id="itemSummaryTableDescription" editable="false" prefWidth="222.0" text="Description" />
+    <TableColumn fx:id="itemSummaryTableDescription" editable="false" prefWidth="202.0" text="Description" />
   </columns>
 </TableView>
