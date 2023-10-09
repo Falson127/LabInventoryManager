@@ -38,8 +38,8 @@
    </Label>
    <Button layoutX="7.0" layoutY="529.0" minWidth="24.208" mnemonicParsing="false" onAction="#onAddLocationButtonClick" text="+" AnchorPane.bottomAnchor="27.0" AnchorPane.leftAnchor="7.0" />
    <Button layoutX="35.0" layoutY="529.0" minWidth="24.208" mnemonicParsing="false" onAction="#onDeleteLocationButton" text="-" AnchorPane.bottomAnchor="27.0" AnchorPane.leftAnchor="35.0" />
-   <Button fx:id="addEntryButton" layoutX="342.0" layoutY="529.0" mnemonicParsing="false" onAction="#onAddEntryButtonClick" text="Add Entry" AnchorPane.bottomAnchor="27.0" AnchorPane.rightAnchor="181.0" />
-   <Button layoutX="417.0" layoutY="529.0" mnemonicParsing="false" onAction="#onEditEntryButton" text="Edit Entry" AnchorPane.bottomAnchor="27.0" AnchorPane.rightAnchor="108.0" />
-   <Button layoutX="491.0" layoutY="529.0" mnemonicParsing="false" onAction="#onDeleteEntryButton" text="Delete Entry" AnchorPane.bottomAnchor="27.0" AnchorPane.rightAnchor="20.0" />
-   <Button fx:id="bulkAddButton" focusTraversable="false" layoutX="262.0" layoutY="529.0" mnemonicParsing="false" onAction="#onBulkEntryMenuItem" opacity="0.0" prefWidth="68.0" />
+   <Button fx:id="addEntryButton" layoutX="330.0" layoutY="529.0" mnemonicParsing="false" onAction="#onAddEntryButtonClick" text="Add Entry" AnchorPane.bottomAnchor="27.0" AnchorPane.rightAnchor="193.0" />
+   <Button layoutX="405.0" layoutY="529.0" mnemonicParsing="false" onAction="#onEditEntryButton" text="Edit Entry" AnchorPane.bottomAnchor="27.0" AnchorPane.rightAnchor="120.0" />
+   <Button layoutX="479.0" layoutY="529.0" mnemonicParsing="false" onAction="#onDeleteEntryButton" text="Delete Entry" AnchorPane.bottomAnchor="27.0" AnchorPane.rightAnchor="32.0" />
+   <Button fx:id="bulkAddButton" focusTraversable="false" layoutX="262.0" layoutY="529.0" mnemonicParsing="false" onAction="#onBulkEntryMenuItem" opacity="0.0" prefWidth="68.0" AnchorPane.bottomAnchor="27.0" AnchorPane.rightAnchor="262.0" />
 </AnchorPane>
