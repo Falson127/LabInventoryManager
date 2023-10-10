@@ -170,9 +170,9 @@ public class DatabaseController implements Initializable {
             statement.setString(3,editEntry_Description.getText());
             statement.setString(4,formatter.format(editEntry_Date.getValue()));
             statement.setInt(5,Integer.parseInt(editEntry_Quantity.getText()));
-            statement.setInt(6,Integer.parseInt(editEntry_IDLabel.getText()));
-            statement.setInt(7,Integer.parseInt(editEntry_Threshold.getText()));
-            statement.setString(8,editEntry_Unit.getText());
+            statement.setInt(8,Integer.parseInt(editEntry_IDLabel.getText()));
+            statement.setInt(6,Integer.parseInt(editEntry_Threshold.getText()));
+            statement.setString(7,editEntry_Unit.getText());
             statement.executeUpdate();
             statement.close();
             connection.close();

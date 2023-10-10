@@ -117,29 +117,32 @@ public class HomeViewController implements Initializable {
     private void onAddLocationButtonClick() throws IOException {
         //Location currentLocation = locationSelector.getSelectionModel().getSelectedItem().getValue();
         FXMLLoader fxmlLoader = new FXMLLoader(LabManagerMain.class.getResource("Add-Location-Dialogue.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(),282,121);
+        Scene scene = new Scene(fxmlLoader.load());
         Stage stage = new Stage();
         stage.setTitle("Add Location");
         stage.setScene(scene);
+        stage.sizeToScene();
         stage.show();
 
     }
     @FXML
     private void onBulkEntryMenuItem() throws IOException{
         FXMLLoader fxmlLoader = new FXMLLoader(LabManagerMain.class.getResource("Add-Entry-Bulk.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(),600,400);
+        Scene scene = new Scene(fxmlLoader.load());
         Stage stage = new Stage();
         stage.setTitle("Add Entry - Bulk");
         stage.setScene(scene);
+        stage.sizeToScene();
         stage.show();
     }
     @FXML
     private void onAddEntryButtonClick() throws IOException{
         FXMLLoader fxmlLoader = new FXMLLoader(LabManagerMain.class.getResource("Add-Entry-Dialogue.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(),511,149);
+        Scene scene = new Scene(fxmlLoader.load());
         Stage stage = new Stage();
         stage.setTitle("Add Entry");
         stage.setScene(scene);
+        stage.sizeToScene();
         stage.show();
     }
     @FXML
@@ -178,9 +181,10 @@ public class HomeViewController implements Initializable {
         DatabaseController controller = loader.getController();
         controller.setCurrentItemID(currentItem.getID());
         controller.fetchEditViewData();
-        Scene scene = new Scene(root,511,149);
+        Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);
+        stage.sizeToScene();
         stage.setTitle("Edit Entry");
         stage.show();
     }
