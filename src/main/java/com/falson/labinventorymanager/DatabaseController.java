@@ -80,18 +80,28 @@ public class DatabaseController implements Initializable {
     @FXML
     private Label detailView_Quantity;
     @FXML
+    private Label detailView_Threshold;
+    @FXML
+    private Label detailView_Unit;
+    @FXML
     private TextArea bulkTextArea;
     @FXML
     private Button bulkCancel;
     @FXML
     private Button bulkSubmit;
     @FXML
+    private TextField addEntry_Threshold;
+    @FXML
+    private TextField addEntry_Unit;
+    @FXML
+    private TextField editEntry_Threshold;
+    @FXML
+    private TextField editEntry_Unit;
+    @FXML
     private void onSubmitLocationButtonClick(){
         String locationName = addLocation_Name.getText() ;
         int parentID = HomeViewController.currentLocation.getID();
-
         try{
-
             connection = DriverManager.getConnection(url);
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO locations_index(Name, ParentID) VALUES(?,?)");
             preparedStatement.setString(1,locationName);
@@ -114,8 +124,10 @@ public class DatabaseController implements Initializable {
         String Name = addEntry_Name.getText();
         String Category = addEntry_Category.getText();
         String Description = addEntry_Description.getText();
-        String Quantity = addEntry_Quantity.getText();
-        Integer LocationID = HomeViewController.currentLocation.getID();
+        int Quantity = Integer.parseInt(addEntry_Quantity.getText());
+        int Threshold = Integer.parseInt(addEntry_Threshold.getText());
+        String Unit = addEntry_Unit.getText();
+        int LocationID = HomeViewController.currentLocation.getID();
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
 
@@ -124,14 +136,16 @@ public class DatabaseController implements Initializable {
             String DateString = Date.format(formatter);
             String url = "jdbc:sqlite:LabInventory.sqlite";
             connection = DriverManager.getConnection(url);
-            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO Item_Locations(Name,Category,Description,LocationName,DateReceived,LocationID,Quantity) VALUES(?,?,?,?,?,?,?)");
+            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO Item_Locations(Name,Category,Description,LocationName,DateReceived,LocationID,Quantity,Threshold,Unit) VALUES(?,?,?,?,?,?,?,?,?)");
             preparedStatement.setString(1,Name);
             preparedStatement.setString(2,Category);
             preparedStatement.setString(3,Description);
             preparedStatement.setString(4,locationName);
             preparedStatement.setString(5,DateString);
             preparedStatement.setInt(6,LocationID);
-            preparedStatement.setString(7,Quantity);
+            preparedStatement.setInt(7,Quantity);
+            preparedStatement.setInt(8,Threshold);
+            preparedStatement.setString(9,Unit);
             preparedStatement.executeUpdate();
             preparedStatement.close();
             connection.close();
@@ -150,13 +164,15 @@ public class DatabaseController implements Initializable {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
         try {
             connection = DriverManager.getConnection(url);
-            PreparedStatement statement = connection.prepareStatement("UPDATE Item_Locations SET Name=?,Category=?,Description=?,DateReceived=?,Quantity=? WHERE ID = ?");
+            PreparedStatement statement = connection.prepareStatement("UPDATE Item_Locations SET Name=?,Category=?,Description=?,DateReceived=?,Quantity=?,Threshold=?,Unit=? WHERE ID = ?");
             statement.setString(1,editEntry_Name.getText());
             statement.setString(2,editEntry_Category.getText());
             statement.setString(3,editEntry_Description.getText());
             statement.setString(4,formatter.format(editEntry_Date.getValue()));
-            statement.setString(5,editEntry_Quantity.getText());
+            statement.setInt(5,Integer.parseInt(editEntry_Quantity.getText()));
             statement.setInt(6,Integer.parseInt(editEntry_IDLabel.getText()));
+            statement.setInt(7,Integer.parseInt(editEntry_Threshold.getText()));
+            statement.setString(8,editEntry_Unit.getText());
             statement.executeUpdate();
             statement.close();
             connection.close();
@@ -248,7 +264,7 @@ public class DatabaseController implements Initializable {
     }
     @FXML
     private void BulkSubmit(){
-        //Bulk Add Syntax: LocationID, Name, Category, Description, LocationName, Quantity, Date Received
+        //Bulk Add Syntax: LocationID, Name, Category, Description, LocationName, Quantity,Threshold, Unit, Date Received
         String rawText = bulkTextArea.getText();
         List<String> lines = new ArrayList<>();
         lines.addAll(Arrays.asList(rawText.split("\\n"))); //split text area into individual lines
@@ -257,14 +273,16 @@ public class DatabaseController implements Initializable {
             variables.addAll(Arrays.asList(line.split(",")));//split each line on comma to get individual variables for SQL query
             try{
                 connection = DriverManager.getConnection(url);
-                PreparedStatement statement = connection.prepareStatement("INSERT INTO Item_Locations(Name,Category,Description,LocationName,LocationID,DateReceived,Quantity) Values(?,?,?,?,?,?,?)");
+                PreparedStatement statement = connection.prepareStatement("INSERT INTO Item_Locations(Name,Category,Description,LocationName,LocationID,DateReceived,Quantity,Threshold,Unit) Values(?,?,?,?,?,?,?,?,?)");
                 statement.setString(1,variables.get(1));
                 statement.setString(2,variables.get(2));
                 statement.setString(3, variables.get(3));
                 statement.setString(4,variables.get(4));
                 statement.setInt(5,Integer.parseInt(variables.get(0)));
-                statement.setString(6,variables.get(6));
-                statement.setString(7,variables.get(5));
+                statement.setString(6,variables.get(8));
+                statement.setInt(7,Integer.parseInt(variables.get(5)));
+                statement.setInt(8,Integer.parseInt(variables.get(6)));
+                statement.setString(9,variables.get(7));
                 statement.execute();
                 statement.close();
                 connection.close();
@@ -287,6 +305,8 @@ public class DatabaseController implements Initializable {
         editEntry_Date.setValue(LocalDate.parse(currentItem.getDateReceived(),formatter));
         editEntry_Category.setText(currentItem.getCategory());
         editEntry_Quantity.setText(Integer.toString(currentItem.getQuantity()));
+        editEntry_Threshold.setText(Integer.toString(currentItem.getThreshold()));
+        editEntry_Unit.setText(currentItem.getUnit());
         editEntry_IDLabel.setText(currentItem.getID().toString());
     }
     private void PopulateDetailView(ResultSet queryResult) throws java.sql.SQLException{
@@ -299,6 +319,9 @@ public class DatabaseController implements Initializable {
         detailView_DateReceived.setText(item.getDateReceived());
         detailView_Description.setText(item.getDescription());
         detailView_Quantity.setText(Integer.toString(item.getQuantity()));
+        detailView_Threshold.setText(Integer.toString(item.getThreshold()));
+        detailView_Unit.setText(item.getUnit());
+
     }
     @Override
     public void initialize(URL urlparam, ResourceBundle resourceBundle) {

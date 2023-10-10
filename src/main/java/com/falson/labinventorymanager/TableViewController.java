@@ -27,7 +27,6 @@ public class TableViewController implements Initializable {
     private static TableViewController instance;
     private String callingMethod;
     private String userInput = "";
-
     String url = "jdbc:sqlite:LabInventory.sqlite";
     private Connection connection;
     @FXML
@@ -49,11 +48,11 @@ public class TableViewController implements Initializable {
             Location currentLocation = HomeViewController.currentLocation;
             try {
                 connection = DriverManager.getConnection(url);
-                PreparedStatement retreiveResults = connection.prepareStatement("SELECT ID,LocationName,Name,Description,LocationID from Item_Locations WHERE LocationID = ?");
+                PreparedStatement retreiveResults = connection.prepareStatement("SELECT ID,LocationName,Name,Description,LocationID,Quantity,Threshold from Item_Locations WHERE LocationID = ?");
                 retreiveResults.setInt(1,currentLocation.getID());
                 ResultSet inventory = retreiveResults.executeQuery();
                 while(inventory.next()){
-                    Item item = new Item(inventory.getInt("ID"),inventory.getString("Name"),inventory.getString("LocationName"),inventory.getString("Description"),inventory.getInt("LocationID"));
+                    Item item = new Item(inventory.getInt("ID"),inventory.getString("Name"),inventory.getString("LocationName"),inventory.getString("Description"),inventory.getInt("LocationID"),inventory.getInt("Quantity"),inventory.getInt("Threshold"));
                     itemSummaryTable.getItems().add(item);
                     itemSummaryTable.refresh();
                 }
@@ -65,13 +64,13 @@ public class TableViewController implements Initializable {
         }else{
             try{
                 connection = DriverManager.getConnection(url);
-                PreparedStatement retreiveResults = connection.prepareStatement("SELECT ID, LocationName,Name,Description,LocationID FROM Item_Locations WHERE Name LIKE ? OR Description LIKE ?");
+                PreparedStatement retreiveResults = connection.prepareStatement("SELECT ID, LocationName,Name,Description,LocationID,Quantity,Threshold FROM Item_Locations WHERE Name LIKE ? OR Description LIKE ?");
                 String searchTerm = '%' + userInput + '%';
                 retreiveResults.setString(1,searchTerm);
                 retreiveResults.setString(2,searchTerm);
                 ResultSet inventory = retreiveResults.executeQuery();
                 while(inventory.next()){
-                    Item item = new Item(inventory.getInt("ID"),inventory.getString("Name"),inventory.getString("LocationName"),inventory.getString("Description"),inventory.getInt("LocationID"));
+                    Item item = new Item(inventory.getInt("ID"),inventory.getString("Name"),inventory.getString("LocationName"),inventory.getString("Description"),inventory.getInt("LocationID"),inventory.getInt("Quantity"),inventory.getInt("Threshold"));
                     itemSummaryTable.getItems().add(item);
                     itemSummaryTable.refresh();
                 }
@@ -119,7 +118,7 @@ public class TableViewController implements Initializable {
             row.itemProperty().addListener((obs, oldItem, newItem) -> {
                 if (newItem != null){
                     if (newItem.getQuantity() < newItem.getThreshold()){
-                        row.setStyle("-fx-background-color: red")   ;
+                        row.setStyle("-fx-background-color: rgba(255,0,0,0.6)")   ;
                     }else{
                         row.setStyle("");
                     }

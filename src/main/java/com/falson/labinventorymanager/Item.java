@@ -29,6 +29,9 @@ public class Item {
     public Item(Integer id,String name, String locationname, String description,Integer locationID){
         this(id,name,null,description,locationname,null,locationID,null,null,null);
     }
+    public Item(Integer id, String name, String locationname, String description, Integer locationID, Integer quantity, Integer threshold){
+        this(id,name,null,description,locationname,null,locationID,quantity,threshold,null);
+    }
     public Integer getID(){
         return ID;
     }
@@ -54,4 +57,3 @@ public class Item {
     public Integer getThreshold(){return Threshold;}
     public String getUnit(){return Unit;}
 }
-
