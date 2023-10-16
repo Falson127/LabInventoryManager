@@ -264,7 +264,7 @@ public class DatabaseController implements Initializable {
     }
     @FXML
     private void BulkSubmit(){
-        //Bulk Add Syntax: LocationID, Name, Category, Description, LocationName, Quantity,Threshold, Unit, Date Received
+        //Bulk Add Syntax: LocationID, Name, Category, Description, LocationName,Quantity,Unit,Threshold, Date Received
         String rawText = bulkTextArea.getText();
         List<String> lines = new ArrayList<>();
         lines.addAll(Arrays.asList(rawText.split("\\n"))); //split text area into individual lines
@@ -281,13 +281,15 @@ public class DatabaseController implements Initializable {
                 statement.setInt(5,Integer.parseInt(variables.get(0)));
                 statement.setString(6,variables.get(8));
                 statement.setFloat(7,Float.parseFloat(variables.get(5)));
-                statement.setFloat(8,Float.parseFloat(variables.get(6)));
-                statement.setString(9,variables.get(7));
+                statement.setFloat(8,Float.parseFloat(variables.get(7)));
+                statement.setString(9,variables.get(6));
                 statement.execute();
                 statement.close();
                 connection.close();
             }catch(SQLException e){
                 logger.log(Level.WARNING,"Error with SQL prepared statement. Likely an entry was formatted incorrectly on one or more lines.");
+                Alert bulkAlert = new Alert(Alert.AlertType.WARNING);
+                bulkAlert.setContentText("Something broke:" + e);
                 throw new RuntimeException();
             }
         }
