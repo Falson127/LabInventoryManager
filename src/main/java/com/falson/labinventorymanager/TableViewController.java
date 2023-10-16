@@ -52,7 +52,7 @@ public class TableViewController implements Initializable {
                 retreiveResults.setInt(1,currentLocation.getID());
                 ResultSet inventory = retreiveResults.executeQuery();
                 while(inventory.next()){
-                    Item item = new Item(inventory.getInt("ID"),inventory.getString("Name"),inventory.getString("LocationName"),inventory.getString("Description"),inventory.getInt("LocationID"),inventory.getInt("Quantity"),inventory.getInt("Threshold"));
+                    Item item = new Item(inventory.getInt("ID"),inventory.getString("Name"),inventory.getString("LocationName"),inventory.getString("Description"),inventory.getInt("LocationID"),inventory.getFloat("Quantity"),inventory.getFloat("Threshold"));
                     itemSummaryTable.getItems().add(item);
                     itemSummaryTable.refresh();
                 }
@@ -70,7 +70,7 @@ public class TableViewController implements Initializable {
                 retreiveResults.setString(2,searchTerm);
                 ResultSet inventory = retreiveResults.executeQuery();
                 while(inventory.next()){
-                    Item item = new Item(inventory.getInt("ID"),inventory.getString("Name"),inventory.getString("LocationName"),inventory.getString("Description"),inventory.getInt("LocationID"),inventory.getInt("Quantity"),inventory.getInt("Threshold"));
+                    Item item = new Item(inventory.getInt("ID"),inventory.getString("Name"),inventory.getString("LocationName"),inventory.getString("Description"),inventory.getInt("LocationID"),inventory.getFloat("Quantity"),inventory.getFloat("Threshold"));
                     itemSummaryTable.getItems().add(item);
                     itemSummaryTable.refresh();
                 }

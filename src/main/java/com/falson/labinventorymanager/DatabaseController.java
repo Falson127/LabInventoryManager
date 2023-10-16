@@ -124,8 +124,8 @@ public class DatabaseController implements Initializable {
         String Name = addEntry_Name.getText();
         String Category = addEntry_Category.getText();
         String Description = addEntry_Description.getText();
-        int Quantity = Integer.parseInt(addEntry_Quantity.getText());
-        int Threshold = Integer.parseInt(addEntry_Threshold.getText());
+        float Quantity = Float.parseFloat(addEntry_Quantity.getText());
+        float Threshold = Float.parseFloat(addEntry_Threshold.getText());
         String Unit = addEntry_Unit.getText();
         int LocationID = HomeViewController.currentLocation.getID();
 
@@ -143,8 +143,8 @@ public class DatabaseController implements Initializable {
             preparedStatement.setString(4,locationName);
             preparedStatement.setString(5,DateString);
             preparedStatement.setInt(6,LocationID);
-            preparedStatement.setInt(7,Quantity);
-            preparedStatement.setInt(8,Threshold);
+            preparedStatement.setFloat(7,Quantity);
+            preparedStatement.setFloat(8,Threshold);
             preparedStatement.setString(9,Unit);
             preparedStatement.executeUpdate();
             preparedStatement.close();
@@ -169,9 +169,9 @@ public class DatabaseController implements Initializable {
             statement.setString(2,editEntry_Category.getText());
             statement.setString(3,editEntry_Description.getText());
             statement.setString(4,formatter.format(editEntry_Date.getValue()));
-            statement.setInt(5,Integer.parseInt(editEntry_Quantity.getText()));
+            statement.setFloat(5,Float.parseFloat(editEntry_Quantity.getText()));
             statement.setInt(8,Integer.parseInt(editEntry_IDLabel.getText()));
-            statement.setInt(6,Integer.parseInt(editEntry_Threshold.getText()));
+            statement.setFloat(6,Float.parseFloat(editEntry_Threshold.getText()));
             statement.setString(7,editEntry_Unit.getText());
             statement.executeUpdate();
             statement.close();
@@ -280,8 +280,8 @@ public class DatabaseController implements Initializable {
                 statement.setString(4,variables.get(4));
                 statement.setInt(5,Integer.parseInt(variables.get(0)));
                 statement.setString(6,variables.get(8));
-                statement.setInt(7,Integer.parseInt(variables.get(5)));
-                statement.setInt(8,Integer.parseInt(variables.get(6)));
+                statement.setFloat(7,Float.parseFloat(variables.get(5)));
+                statement.setFloat(8,Float.parseFloat(variables.get(6)));
                 statement.setString(9,variables.get(7));
                 statement.execute();
                 statement.close();
@@ -299,27 +299,27 @@ public class DatabaseController implements Initializable {
     }
     private void PopulateEditView(ResultSet qR) throws SQLException{
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-        Item currentItem = new Item(qR.getInt("ID"),qR.getString("Name"),qR.getString("Category"),qR.getString("Description"),qR.getString("LocationName"),qR.getString("DateReceived"),qR.getInt("LocationID"),qR.getInt("Quantity"),qR.getInt("Threshold"),qR.getString("Unit"));
+        Item currentItem = new Item(qR.getInt("ID"),qR.getString("Name"),qR.getString("Category"),qR.getString("Description"),qR.getString("LocationName"),qR.getString("DateReceived"),qR.getInt("LocationID"),qR.getFloat("Quantity"),qR.getFloat("Threshold"),qR.getString("Unit"));
         editEntry_Name.setText(currentItem.getName());
         editEntry_Description.setText(currentItem.getDescription());
         editEntry_Date.setValue(LocalDate.parse(currentItem.getDateReceived(),formatter));
         editEntry_Category.setText(currentItem.getCategory());
-        editEntry_Quantity.setText(Integer.toString(currentItem.getQuantity()));
-        editEntry_Threshold.setText(Integer.toString(currentItem.getThreshold()));
+        editEntry_Quantity.setText(Float.toString(currentItem.getQuantity()));
+        editEntry_Threshold.setText(Float.toString(currentItem.getThreshold()));
         editEntry_Unit.setText(currentItem.getUnit());
         editEntry_IDLabel.setText(currentItem.getID().toString());
     }
     private void PopulateDetailView(ResultSet queryResult) throws java.sql.SQLException{
         Item item = new Item(queryResult.getInt("ID"),queryResult.getString("Name"),queryResult.getString("Category"),queryResult.getString("Description"),
-                queryResult.getString("LocationName"),queryResult.getString("DateReceived"),queryResult.getInt("LocationID"),queryResult.getInt("Quantity"),queryResult.getInt("Threshold"),queryResult.getString("Unit"));
+                queryResult.getString("LocationName"),queryResult.getString("DateReceived"),queryResult.getInt("LocationID"),queryResult.getFloat("Quantity"),queryResult.getFloat("Threshold"),queryResult.getString("Unit"));
         detailView_ID.setText(item.getID().toString());
         detailView_Name.setText(item.getName());
         detailView_LocationAndID.setText(String.format("%s (%d)",item.getLocationName(),item.getLocationID()));
         detailView_Category.setText(item.getCategory());
         detailView_DateReceived.setText(item.getDateReceived());
         detailView_Description.setText(item.getDescription());
-        detailView_Quantity.setText(Integer.toString(item.getQuantity()));
-        detailView_Threshold.setText(Integer.toString(item.getThreshold()));
+        detailView_Quantity.setText(Float.toString(item.getQuantity()));
+        detailView_Threshold.setText(Float.toString(item.getThreshold()));
         detailView_Unit.setText(item.getUnit());
 
     }
