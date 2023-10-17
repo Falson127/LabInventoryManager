@@ -41,7 +41,7 @@ public class HomeViewController implements Initializable {
         RebuildTree();
         UpdateTableView();
         SetTreeEventWatcher();
-        dynamicLocationLabel.setText(currentLocation.getName());
+        dynamicLocationLabel.setText(String.format("%s:(%d)",currentLocation.getName(),currentLocation.getID()));
         instance = this;
 
     }
@@ -89,7 +89,7 @@ public class HomeViewController implements Initializable {
                 //this will generate a query to the database and pull the resulting table into the Items-Summary view
                 //This view must then be loaded into the mainDynamicPanel
                 currentLocation = newValue.getValue(); //set current location
-                dynamicLocationLabel.setText(currentLocation.getName()); //set Location Label
+                dynamicLocationLabel.setText(String.format("%s:(%d)",currentLocation.getName(),currentLocation.getID())); //set Location Label
                 UpdateTableView();
             }
         });
