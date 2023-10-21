@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
@@ -38,7 +39,8 @@ public class TableViewController implements Initializable {
     @FXML
     TableColumn<Item, String> itemSummaryTableDescription;
     @FXML
-    AnchorPane tableAnchorPane;
+    ScrollPane itemSummaryScrollPane;
+
     @SuppressWarnings("Duplicates")
     public void FillTable(){
         if(itemSummaryTable != null){
@@ -126,6 +128,9 @@ public class TableViewController implements Initializable {
             });
             return row;
         });
+    }
+    public void SetScrollPaneFit_to_WidthProperty(boolean bool){
+        itemSummaryScrollPane.setFitToWidth(bool);
     }
     public TableViewController getInstance(){
         return instance;

@@ -24,12 +24,12 @@ import java.util.logging.Logger;
 public class HomeViewController implements Initializable {
     private static final Logger logger = Logger.getLogger(TableViewController.class.getName());
     public static Location currentLocation;
-    private TableViewController tableInstance;
+    public TableViewController tableInstance;
     private static HomeViewController instance;
     @FXML
     TreeView<Location> locationSelector;
     @FXML
-    private AnchorPane mainDynamicPanel;
+    public AnchorPane mainDynamicPanel;
     @FXML
     private Label dynamicLocationLabel;
     @FXML
@@ -43,7 +43,6 @@ public class HomeViewController implements Initializable {
         SetTreeEventWatcher();
         dynamicLocationLabel.setText(String.format("%s:(%d)",currentLocation.getName(),currentLocation.getID()));
         instance = this;
-
     }
     public void RebuildTree(){
         TreeViewFactory factory = new TreeViewFactory();
@@ -74,6 +73,7 @@ public class HomeViewController implements Initializable {
             mainDynamicPanel.getChildren().clear();
             mainDynamicPanel.getChildren().add(root);
             setDynamicPaneScaling(root);
+
         } catch (IOException e) {
             logger.log(Level.WARNING,"IOException being caused by UpdateTableView method call");
         }
