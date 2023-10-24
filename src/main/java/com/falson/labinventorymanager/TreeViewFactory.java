@@ -73,7 +73,6 @@ public class TreeViewFactory {
                 TreeItem<Location> parentItem = parentMap.get(parentID);
                 parentItem.getChildren().add(childItem);
             }
-
         }
     }
 }

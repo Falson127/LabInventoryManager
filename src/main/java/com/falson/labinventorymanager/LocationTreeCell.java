@@ -11,7 +11,7 @@ public class LocationTreeCell extends TreeCell<Location> {
             setText(null);
             setGraphic(null);
         } else{
-            setText(item.getName());
+            setText(String.format("%s (%d)",item.getName(),item.getID()));
         }
     }
 }
