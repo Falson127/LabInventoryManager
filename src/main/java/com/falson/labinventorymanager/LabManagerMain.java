@@ -6,17 +6,13 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
 import java.io.IOException;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class LabManagerMain extends Application {
-    private static final Logger logger = Logger.getLogger(TableViewController.class.getName());
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(LabManagerMain.class.getResource("Home-View.fxml"));
@@ -26,29 +22,33 @@ public class LabManagerMain extends Application {
         stage.show();
         HomeViewController instance = HomeViewController.getInstance();
         TableViewController tableInstance = instance.tableInstance;
-        AtomicBoolean waitForRescale = new AtomicBoolean(false);
+        var psuedoPrefWidth = (tableInstance.itemSummaryTableLocation.getPrefWidth()+tableInstance.itemSummaryTableName.getPrefWidth()+tableInstance.itemSummaryTableDescription.getPrefWidth());
+        //option1
         scene.widthProperty().addListener((obs, oldVal, newVal) -> {
             Platform.runLater(() -> {
-                if (tableInstance.itemSummaryTable.getPrefWidth() > instance.mainDynamicPanel.getWidth()) {
+                if (psuedoPrefWidth > instance.mainDynamicPanel.getWidth()) {
                     tableInstance.itemSummaryScrollPane.setFitToWidth(false);
-                    logger.log(Level.WARNING, "Setting FitToWidth = false");
                 } else {
                     tableInstance.itemSummaryScrollPane.setFitToWidth(true);
-                    logger.log(Level.WARNING, "Setting FitToWidth = true");
-                    waitForRescale.set(true);
                 }
-                Node node = scene.getFocusOwner();
-                var oldWidth = tableInstance.itemSummaryTable.getWidth();
-                tableInstance.itemSummaryTable.requestFocus();
-                logger.log(Level.WARNING, String.format("TableWidth = %s\nScrollPaneWidth = %s", tableInstance.itemSummaryTable.getWidth(), tableInstance.itemSummaryScrollPane.getWidth()));
-
             });
         });
+        //option 2
+        stage.maximizedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
+                Platform.runLater(() ->{
+                    Node node = scene.getFocusOwner();
+                    if (node != tableInstance.itemSummaryTable) {
+                        tableInstance.itemSummaryTable.requestFocus();
+                    } else {
+                        scene.getRoot().getChildrenUnmodifiable().get(0).requestFocus();
+                    }
+                });
+            }
+        });
     }
-
     public static void main(String[] args) {
         launch();
-
-
     }
 }

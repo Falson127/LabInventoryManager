@@ -1,26 +1,18 @@
 package com.falson.labinventorymanager;
 
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-
 public class HomeViewController implements Initializable {
     private static final Logger logger = Logger.getLogger(TableViewController.class.getName());
     public static Location currentLocation;
@@ -34,9 +26,8 @@ public class HomeViewController implements Initializable {
     private Label dynamicLocationLabel;
     @FXML
     private TextField homeSearchBar;
-    @FXML
-    private Button addEntryButton;
-    private BooleanProperty shiftPressed = new SimpleBooleanProperty(false);
+
+
     public void initialize(URL url, ResourceBundle resourceBundle){
         RebuildTree();
         UpdateTableView();
@@ -52,7 +43,6 @@ public class HomeViewController implements Initializable {
             currentLocation = locationSelector.getRoot().getValue();
         }
         expandAllTreeItems(locationSelector.getRoot());
-
     }
     private void expandAllTreeItems(TreeItem<Location> item) {
         if (item != null && !item.isLeaf()) {
@@ -73,7 +63,6 @@ public class HomeViewController implements Initializable {
             mainDynamicPanel.getChildren().clear();
             mainDynamicPanel.getChildren().add(root);
             setDynamicPaneScaling(root);
-
         } catch (IOException e) {
             logger.log(Level.WARNING,"IOException being caused by UpdateTableView method call");
         }

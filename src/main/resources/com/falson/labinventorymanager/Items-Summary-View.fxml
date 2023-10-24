@@ -4,7 +4,7 @@
 
 <ScrollPane fx:id="itemSummaryScrollPane" fitToHeight="true" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.falson.labinventorymanager.TableViewController">
    <content>
-      <TableView fx:id="itemSummaryTable" prefHeight="400.0" prefWidth="598.0">
+      <TableView fx:id="itemSummaryTable" prefHeight="400.0">
         <columns>
           <TableColumn fx:id="itemSummaryTableLocation" editable="false" prefWidth="103.0" text="Location" />
           <TableColumn fx:id="itemSummaryTableName" editable="false" prefWidth="152.0" text="Name" />
