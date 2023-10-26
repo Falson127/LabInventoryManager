@@ -29,11 +29,11 @@ public class HomeViewController implements Initializable {
 
 
     public void initialize(URL url, ResourceBundle resourceBundle){
+        instance = this;
         RebuildTree();
         UpdateTableView();
         SetTreeEventWatcher();
         dynamicLocationLabel.setText(String.format("%s:(%d)",currentLocation.getName(),currentLocation.getID()));
-        instance = this;
     }
     public void RebuildTree(){
         TreeViewFactory factory = new TreeViewFactory();
@@ -67,11 +67,21 @@ public class HomeViewController implements Initializable {
             logger.log(Level.WARNING,"IOException being caused by UpdateTableView method call");
         }
     }
-    private void setDynamicPaneScaling(Parent root){
+    public void setDynamicPaneScaling(Parent root){
         mainDynamicPanel.setTopAnchor(root,0.0);
         mainDynamicPanel.setBottomAnchor(root,0.0);
         mainDynamicPanel.setLeftAnchor(root,0.0);
         mainDynamicPanel.setRightAnchor(root,0.0);
+        if (mainDynamicPanel.getScene() != null) {
+            var window = (Stage) mainDynamicPanel.getScene().getWindow();
+            if (670 > window.getWidth()){
+                instance.tableInstance.itemSummaryScrollPane.setFitToWidth(false);
+                logger.log(Level.WARNING,"fitWidth = false");
+            } else {
+                instance.tableInstance.itemSummaryScrollPane.setFitToWidth(true);
+                logger.log(Level.WARNING,"fitWidth = true");
+            }
+        }
     }
     private void SetTreeEventWatcher() {
         locationSelector.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {

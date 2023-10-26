@@ -5,12 +5,10 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -128,9 +126,6 @@ public class TableViewController implements Initializable {
             });
             return row;
         });
-    }
-    public void SetScrollPaneFit_to_WidthProperty(boolean bool){
-        itemSummaryScrollPane.setFitToWidth(bool);
     }
     public TableViewController getInstance(){
         return instance;

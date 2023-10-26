@@ -13,6 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class LabManagerMain extends Application {
+    private static final Logger logger = Logger.getLogger(LabManagerMain.class.getName());
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(LabManagerMain.class.getResource("Home-View.fxml"));
@@ -21,15 +22,13 @@ public class LabManagerMain extends Application {
         stage.setScene(scene);
         stage.show();
         HomeViewController instance = HomeViewController.getInstance();
-        TableViewController tableInstance = instance.tableInstance;
-        var psuedoPrefWidth = (tableInstance.itemSummaryTableLocation.getPrefWidth()+tableInstance.itemSummaryTableName.getPrefWidth()+tableInstance.itemSummaryTableDescription.getPrefWidth());
-        //option1
+        //var psuedoPrefWidth = (tableInstance.itemSummaryTableLocation.getPrefWidth()+tableInstance.itemSummaryTableName.getPrefWidth()+tableInstance.itemSummaryTableDescription.getPrefWidth());
         scene.widthProperty().addListener((obs, oldVal, newVal) -> {
             Platform.runLater(() -> {
-                if (psuedoPrefWidth > instance.mainDynamicPanel.getWidth()) {
-                    tableInstance.itemSummaryScrollPane.setFitToWidth(false);
+                if (670 > instance.mainDynamicPanel.getWidth()) {
+                    instance.tableInstance.itemSummaryScrollPane.setFitToWidth(false);
                 } else {
-                    tableInstance.itemSummaryScrollPane.setFitToWidth(true);
+                    instance.tableInstance.itemSummaryScrollPane.setFitToWidth(true);
                 }
             });
         });
@@ -39,8 +38,8 @@ public class LabManagerMain extends Application {
             public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
                 Platform.runLater(() ->{
                     Node node = scene.getFocusOwner();
-                    if (node != tableInstance.itemSummaryTable) {
-                        tableInstance.itemSummaryTable.requestFocus();
+                    if (node != instance.tableInstance.itemSummaryTable) {
+                        instance.tableInstance.itemSummaryTable.requestFocus();
                     } else {
                         scene.getRoot().getChildrenUnmodifiable().get(0).requestFocus();
                     }

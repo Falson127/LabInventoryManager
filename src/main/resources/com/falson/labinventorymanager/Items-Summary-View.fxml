@@ -6,9 +6,9 @@
    <content>
       <TableView fx:id="itemSummaryTable" prefHeight="400.0">
         <columns>
-          <TableColumn fx:id="itemSummaryTableLocation" editable="false" prefWidth="103.0" text="Location" />
-          <TableColumn fx:id="itemSummaryTableName" editable="false" prefWidth="152.0" text="Name" />
-          <TableColumn fx:id="itemSummaryTableDescription" editable="false" prefWidth="363.0" text="Description" />
+          <TableColumn fx:id="itemSummaryTableLocation" editable="false" prefWidth="110.0" text="Location" />
+          <TableColumn fx:id="itemSummaryTableName" editable="false" prefWidth="200.0" text="Name" />
+          <TableColumn fx:id="itemSummaryTableDescription" editable="false" prefWidth="360.0" text="Description" />
         </columns>
       </TableView>
    </content>
