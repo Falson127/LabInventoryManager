@@ -40,7 +40,7 @@ public class HomeViewController implements Initializable {
         factory.GetSortedTreeView(this.locationSelector);
         locationSelector.setCellFactory(tree -> new LocationTreeCell());
         if (currentLocation == null) {
-            if (locationSelector.getRoot().getChildren().size() != 0) {
+            if (!locationSelector.getRoot().getChildren().isEmpty()) {
                 currentLocation = locationSelector.getRoot().getChildren().get(0).getValue();
             }
             else{
@@ -74,17 +74,13 @@ public class HomeViewController implements Initializable {
         }
     }
     public void setDynamicPaneScaling(Parent root){
-        mainDynamicPanel.setTopAnchor(root,0.0);
-        mainDynamicPanel.setBottomAnchor(root,0.0);
-        mainDynamicPanel.setLeftAnchor(root,0.0);
-        mainDynamicPanel.setRightAnchor(root,0.0);
+        AnchorPane.setTopAnchor(root,0.0);
+        AnchorPane.setBottomAnchor(root,0.0);
+        AnchorPane.setLeftAnchor(root,0.0);
+        AnchorPane.setRightAnchor(root,0.0);
         if (mainDynamicPanel.getScene() != null) {
             var window = (Stage) mainDynamicPanel.getScene().getWindow();
-            if (670 > window.getWidth()){
-                instance.tableInstance.itemSummaryScrollPane.setFitToWidth(false);
-            } else {
-                instance.tableInstance.itemSummaryScrollPane.setFitToWidth(true);
-            }
+            instance.tableInstance.itemSummaryScrollPane.setFitToWidth(!(670 > window.getWidth()));
         }
     }
     private void SetTreeEventWatcher() {
