@@ -42,6 +42,7 @@ public class HomeViewController implements Initializable {
         if (currentLocation == null) {
             currentLocation = locationSelector.getRoot().getValue();
         }
+        locationSelector.setShowRoot(false);
         expandAllTreeItems(locationSelector.getRoot());
     }
     private void expandAllTreeItems(TreeItem<Location> item) {

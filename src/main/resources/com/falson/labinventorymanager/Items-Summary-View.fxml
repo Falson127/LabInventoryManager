@@ -4,12 +4,15 @@
 
 <ScrollPane fx:id="itemSummaryScrollPane" fitToHeight="true" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.falson.labinventorymanager.TableViewController">
    <content>
-      <TableView fx:id="itemSummaryTable" prefHeight="400.0">
+      <TableView fx:id="itemSummaryTable" prefHeight="400.0" maxWidth="${itemSummaryTable.prefWidth}">
         <columns>
           <TableColumn fx:id="itemSummaryTableLocation" editable="false" prefWidth="110.0" text="Location" />
           <TableColumn fx:id="itemSummaryTableName" editable="false" prefWidth="200.0" text="Name" />
           <TableColumn fx:id="itemSummaryTableDescription" editable="false" prefWidth="360.0" text="Description" />
         </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
       </TableView>
    </content>
 </ScrollPane>
