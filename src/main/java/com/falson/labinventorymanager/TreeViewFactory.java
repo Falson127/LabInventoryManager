@@ -12,7 +12,7 @@ import java.util.Map;
 
 
 public class TreeViewFactory {
-    String url = "jdbc:sqlite:LabInventory.sqlite";
+    final String url = "jdbc:sqlite:LabInventory.sqlite";
 
     public List<Location> GetLocationsList(){
         try {
@@ -38,23 +38,22 @@ public class TreeViewFactory {
         }
     }
     public TreeView<Location> BuildTreeView(List<Location> locationsList,TreeView<Location> fxmlTreeView){
-        TreeView<Location> treeView = fxmlTreeView;
         for (Location location: locationsList
              ) {
             if (location.getID() == -1){
                 TreeItem<Location> rootItem = new TreeItem<>(location);
-                treeView.setRoot(rootItem);
+                fxmlTreeView.setRoot(rootItem);
             }
         }//find and set the root item
         for (Location location: locationsList
              ) {
             if(location.getID() != -1){
                 TreeItem<Location> treeItem = new TreeItem<>(location);
-                treeView.getRoot().getChildren().add(treeItem);
+                fxmlTreeView.getRoot().getChildren().add(treeItem);
             }
         }//load all locations that aren't set as ID = 0 for root into the children of the root item
         //pass loaded treeView to next method for sorting the relationships with locationList in Tuple
-        return treeView;
+        return fxmlTreeView;
     }
 
     public void GetSortedTreeView(TreeView<Location> fxmlTreeView){

@@ -1,33 +1,23 @@
 package com.falson.labinventorymanager;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
-import java.util.Properties;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class TableViewController implements Initializable {
-    private static final Logger logger = Logger.getLogger(TableViewController.class.getName());
     private static TableViewController instance;
     private String callingMethod;
     private String userInput = "";
-    String url = "jdbc:sqlite:LabInventory.sqlite";
-    private Connection connection;
+    final String url = "jdbc:sqlite:LabInventory.sqlite";
     @FXML
     TableView<Item> itemSummaryTable;
     @FXML
@@ -44,19 +34,20 @@ public class TableViewController implements Initializable {
         if(itemSummaryTable != null){
             itemSummaryTable.getItems().clear();
         }
+        Connection connection;
         if (callingMethod.equals("Standard") || userInput.isEmpty()) {
             Location currentLocation = HomeViewController.currentLocation;
             try {
                 connection = DriverManager.getConnection(url);
-                PreparedStatement retreiveResults = connection.prepareStatement("SELECT ID,LocationName,Name,Description,LocationID,Quantity,Threshold from Item_Locations WHERE LocationID = ?");
-                retreiveResults.setInt(1,currentLocation.getID());
-                ResultSet inventory = retreiveResults.executeQuery();
+                PreparedStatement retrieveResults = connection.prepareStatement("SELECT ID,LocationName,Name,Description,LocationID,Quantity,Threshold from Item_Locations WHERE LocationID = ?");
+                retrieveResults.setInt(1,currentLocation.getID());
+                ResultSet inventory = retrieveResults.executeQuery();
                 while(inventory.next()){
                     Item item = new Item(inventory.getInt("ID"),inventory.getString("Name"),inventory.getString("LocationName"),inventory.getString("Description"),inventory.getInt("LocationID"),inventory.getFloat("Quantity"),inventory.getFloat("Threshold"));
                     itemSummaryTable.getItems().add(item);
                     itemSummaryTable.refresh();
                 }
-                retreiveResults.close();
+                retrieveResults.close();
                 connection.close();
             } catch (SQLException e) {
                 throw new RuntimeException(e);

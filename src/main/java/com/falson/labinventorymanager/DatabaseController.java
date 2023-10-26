@@ -16,7 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class DatabaseController implements Initializable {
-    static String url = "jdbc:sqlite:LabInventory.sqlite";
+    static final String url = "jdbc:sqlite:LabInventory.sqlite";
     private int currentItem;
     private static final Logger logger = Logger.getLogger(TableViewController.class.getName());
     private Connection connection;
@@ -111,7 +111,7 @@ public class DatabaseController implements Initializable {
             instance.RebuildTree();
         }
         catch (SQLException e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING,"SQLException thrown by SubmitLocationButton method");
         }
     }
     @FXML
@@ -151,7 +151,7 @@ public class DatabaseController implements Initializable {
             stage.close();
         }
         catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING,"Exception thrown by SubmitEntry method");
         }
 
     }
