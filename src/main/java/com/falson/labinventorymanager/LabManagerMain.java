@@ -22,7 +22,6 @@ public class LabManagerMain extends Application {
         stage.setScene(scene);
         stage.show();
         HomeViewController instance = HomeViewController.getInstance();
-        //var psuedoPrefWidth = (tableInstance.itemSummaryTableLocation.getPrefWidth()+tableInstance.itemSummaryTableName.getPrefWidth()+tableInstance.itemSummaryTableDescription.getPrefWidth());
         scene.widthProperty().addListener((obs, oldVal, newVal) -> {
             Platform.runLater(() -> {
                 if (670 > instance.mainDynamicPanel.getWidth()) {
@@ -32,7 +31,6 @@ public class LabManagerMain extends Application {
                 }
             });
         });
-        //option 2
         stage.maximizedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {

@@ -76,10 +76,8 @@ public class HomeViewController implements Initializable {
             var window = (Stage) mainDynamicPanel.getScene().getWindow();
             if (670 > window.getWidth()){
                 instance.tableInstance.itemSummaryScrollPane.setFitToWidth(false);
-                logger.log(Level.WARNING,"fitWidth = false");
             } else {
                 instance.tableInstance.itemSummaryScrollPane.setFitToWidth(true);
-                logger.log(Level.WARNING,"fitWidth = true");
             }
         }
     }
