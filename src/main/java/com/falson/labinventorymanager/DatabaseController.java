@@ -1,18 +1,11 @@
 package com.falson.labinventorymanager;
 
-import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
-
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.fxml.FXML;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -47,8 +40,6 @@ public class DatabaseController implements Initializable {
     private TextField addLocation_Name;
     @FXML
     private Button addEntry_SubmitButton;
-    @FXML
-    private AnchorPane editEntry_Anchor;
     @FXML
     private Label editEntry_IDLabel;
     @FXML
@@ -98,9 +89,14 @@ public class DatabaseController implements Initializable {
     @FXML
     private TextField editEntry_Unit;
     @FXML
+    private CheckBox addLocation_ForceRootBox;
+    @FXML
     private void onSubmitLocationButtonClick(){
         String locationName = addLocation_Name.getText() ;
-        int parentID = HomeViewController.currentLocation.getID();
+        int parentID = -1;
+        if (!addLocation_ForceRootBox.isSelected()) {
+            parentID = HomeViewController.currentLocation.getID();
+        }
         try{
             connection = DriverManager.getConnection(url);
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO locations_index(Name, ParentID) VALUES(?,?)");
@@ -266,11 +262,9 @@ public class DatabaseController implements Initializable {
     private void BulkSubmit(){
         //Bulk Add Syntax: LocationID, Name, Category, Description, LocationName,Quantity,Unit,Threshold, Date Received
         String rawText = bulkTextArea.getText();
-        List<String> lines = new ArrayList<>();
-        lines.addAll(Arrays.asList(rawText.split("\\n"))); //split text area into individual lines
+        List<String> lines = new ArrayList<>(Arrays.asList(rawText.split("\\n"))); //split text area into individual lines
         for (String line: lines) {
-            List<String> variables = new ArrayList<>();
-            variables.addAll(Arrays.asList(line.split(",")));//split each line on comma to get individual variables for SQL query
+            List<String> variables = new ArrayList<>(Arrays.asList(line.split(",")));//split each line on comma to get individual variables for SQL query
             try{
                 connection = DriverManager.getConnection(url);
                 PreparedStatement statement = connection.prepareStatement("INSERT INTO Item_Locations(Name,Category,Description,LocationName,LocationID,DateReceived,Quantity,Threshold,Unit) Values(?,?,?,?,?,?,?,?,?)");
