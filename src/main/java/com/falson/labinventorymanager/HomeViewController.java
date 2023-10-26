@@ -40,7 +40,12 @@ public class HomeViewController implements Initializable {
         factory.GetSortedTreeView(this.locationSelector);
         locationSelector.setCellFactory(tree -> new LocationTreeCell());
         if (currentLocation == null) {
-            currentLocation = locationSelector.getRoot().getValue();
+            if (locationSelector.getRoot().getChildren().size() != 0) {
+                currentLocation = locationSelector.getRoot().getChildren().get(0).getValue();
+            }
+            else{
+                currentLocation = locationSelector.getRoot().getValue();
+            }
         }
         locationSelector.setShowRoot(false);
         expandAllTreeItems(locationSelector.getRoot());
