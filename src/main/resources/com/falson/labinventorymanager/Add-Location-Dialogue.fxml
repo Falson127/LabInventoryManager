@@ -6,7 +6,7 @@
 <AnchorPane prefHeight="121.0" prefWidth="282.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.falson.labinventorymanager.DatabaseController">
    <TextField fx:id="addLocation_Name" layoutX="14.0" layoutY="38.0" prefHeight="25.0" prefWidth="242.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="26.0" />
    <Label layoutX="14.0" layoutY="14.0" text="Location Name" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0" />
-   <Button fx:id="addLocation_CancelButton" layoutX="143.0" layoutY="75.0" mnemonicParsing="false" onAction="#onCancelLocationButtonClick" text="Cancel" AnchorPane.bottomAnchor="21.0" AnchorPane.rightAnchor="87.0" />
+   <Button fx:id="addLocation_CancelButton" layoutX="130.5" layoutY="75.0" mnemonicParsing="false" onAction="#onCancelLocationButtonClick" text="Cancel" AnchorPane.bottomAnchor="21.0" AnchorPane.rightAnchor="90.0" />
    <Button fx:id="addLocation_SubmitButton" layoutX="203.0" layoutY="75.0" mnemonicParsing="false" onAction="#onSubmitLocationButtonClick" text="Submit" AnchorPane.bottomAnchor="21.0" AnchorPane.rightAnchor="25.0" />
    <CheckBox fx:id="addLocation_ForceRootBox" focusTraversable="false" layoutX="18.0" layoutY="79.0" mnemonicParsing="false" text="Force Root" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="18.0" />
 </AnchorPane>

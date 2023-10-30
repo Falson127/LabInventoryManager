@@ -2,15 +2,14 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="675.0" xmlns="http://javafx.com/javafx/17.0.2-ea"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.falson.labinventorymanager.DatabaseController">
-   <TextArea fx:id="bulkTextArea" layoutX="24.0" layoutY="39.0" prefHeight="313.0" prefWidth="633.0"
-             promptText="Add entries one per line, with syntax above including commas"/>
-   <Button fx:id="bulkCancel" layoutX="535.0" layoutY="361.0" mnemonicParsing="false" onAction="#CancelBulkSubmit"
-           text="Cancel"/>
-   <Button fx:id="bulkSubmit" layoutX="602.0" layoutY="361.0" mnemonicParsing="false" onAction="#BulkSubmit"
-           text="Submit"/>
-   <Label layoutX="24.0" layoutY="14.0"
-          text="Syntax: LocationID, Name, Category, Description, LocationName, Quantity, Unit, Threshold, Date Received(MM/dd/yyyy)"/>
+<AnchorPane prefHeight="400.0" prefWidth="675.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.falson.labinventorymanager.DatabaseController">
+   <TextArea fx:id="bulkTextArea" layoutX="24.0" layoutY="39.0" prefHeight="313.0" prefWidth="652.0" promptText="Add entries one per line, with syntax above including commas" />
+   <Button fx:id="bulkCancel" layoutX="541.0" layoutY="361.0" mnemonicParsing="false" onAction="#CancelBulkSubmit" text="Cancel" />
+   <Button fx:id="bulkSubmit" layoutX="612.0" layoutY="361.0" mnemonicParsing="false" onAction="#BulkSubmit" text="Submit" />
+   <Label layoutX="24.0" layoutY="14.0" text="Syntax: LocationID, Name, Category, Description, LocationName, Quantity, Unit, Threshold, Date Received(MM/dd/yyyy)">
+      <font>
+         <Font size="11.0" />
+      </font></Label>
 </AnchorPane>

@@ -3,25 +3,23 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="312.0" prefWidth="231.0" xmlns="http://javafx.com/javafx/17.0.2-ea"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.falson.labinventorymanager.DatabaseController">
-   <Label layoutX="23.0" layoutY="64.0" text="Name:"/>
-   <Label fx:id="detailView_Name" layoutX="107.0" layoutY="64.0" text="Placeholder"/>
-   <Label layoutX="23.0" layoutY="94.0" text="Location (ID):"/>
-   <Label layoutX="23.0" layoutY="31.0" text="ID#:"/>
-   <Label fx:id="detailView_ID" layoutX="107.0" layoutY="31.0" text="Placeholder"/>
-   <Label layoutX="23.0" layoutY="130.0" text="Category:"/>
-   <Label layoutX="23.0" layoutY="160.0" text="Date Received:"/>
-   <Label layoutX="23.0" layoutY="277.0" text="Description"/>
-   <Label fx:id="detailView_LocationAndID" layoutX="109.0" layoutY="94.0" text="Placeholder"/>
-   <Label fx:id="detailView_Category" layoutX="107.0" layoutY="130.0" text="Placeholder"/>
-   <Label fx:id="detailView_DateReceived" layoutX="107.0" layoutY="160.0" text="Placeholder"/>
-   <Label fx:id="detailView_Description" layoutX="107.0" layoutY="277.0" maxWidth="195.0" text="Placeholder"
-          wrapText="true"/>
-   <Label layoutX="23.0" layoutY="192.0" text="Quantity:"/>
-   <Label fx:id="detailView_Quantity" layoutX="107.0" layoutY="192.0" text="Placeholder"/>
-   <Label layoutX="23.0" layoutY="220.0" text="Threshold:"/>
-   <Label fx:id="detailView_Threshold" layoutX="109.0" layoutY="220.0" text="Placeholder"/>
-   <Label layoutX="23.0" layoutY="247.0" text="Unit:"/>
-   <Label fx:id="detailView_Unit" layoutX="109.0" layoutY="247.0" text="Placeholder"/>
+<AnchorPane prefHeight="312.0" prefWidth="234.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.falson.labinventorymanager.DatabaseController">
+   <Label layoutX="23.0" layoutY="64.0" text="Name:" />
+   <Label fx:id="detailView_Name" layoutX="128.0" layoutY="64.0" text="Placeholder" />
+   <Label layoutX="23.0" layoutY="94.0" text="Location (ID):" />
+   <Label layoutX="23.0" layoutY="31.0" text="ID#:" />
+   <Label fx:id="detailView_ID" layoutX="128.0" layoutY="31.0" text="Placeholder" />
+   <Label layoutX="23.0" layoutY="130.0" text="Category:" />
+   <Label layoutX="23.0" layoutY="160.0" text="Date Received:" />
+   <Label layoutX="23.0" layoutY="277.0" text="Description" />
+   <Label fx:id="detailView_LocationAndID" layoutX="130.0" layoutY="94.0" text="Placeholder" />
+   <Label fx:id="detailView_Category" layoutX="128.0" layoutY="130.0" text="Placeholder" />
+   <Label fx:id="detailView_DateReceived" layoutX="128.0" layoutY="160.0" text="Placeholder" />
+   <Label fx:id="detailView_Description" layoutX="128.0" layoutY="277.0" maxWidth="195.0" text="Placeholder" wrapText="true" />
+   <Label layoutX="23.0" layoutY="192.0" text="Quantity:" />
+   <Label fx:id="detailView_Quantity" layoutX="128.0" layoutY="192.0" text="Placeholder" />
+   <Label layoutX="23.0" layoutY="220.0" text="Threshold:" />
+   <Label fx:id="detailView_Threshold" layoutX="130.0" layoutY="220.0" text="Placeholder" />
+   <Label layoutX="23.0" layoutY="247.0" text="Unit:" />
+   <Label fx:id="detailView_Unit" layoutX="130.0" layoutY="247.0" text="Placeholder" />
 </AnchorPane>
