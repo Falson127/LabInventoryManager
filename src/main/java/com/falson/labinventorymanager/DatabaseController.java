@@ -195,6 +195,24 @@ public class DatabaseController implements Initializable {
         Stage stage = (Stage) addEntry_CancelButton.getScene().getWindow();
         stage.close();
     }
+    public static void UpdateLocation(int ItemID, int newLocationID){
+        try {
+            Connection connection = DriverManager.getConnection(url);
+            PreparedStatement getName = connection.prepareStatement("SELECT Name FROM locations_index WHERE ID=?");
+            getName.setInt(1,newLocationID);
+            String newName = getName.executeQuery().getString("Name");
+
+            PreparedStatement updateLocation = connection.prepareStatement("UPDATE Item_Locations SET LocationID=?, LocationName=? WHERE ID=?");
+            updateLocation.setInt(1,newLocationID);
+            updateLocation.setString(2,newName);
+            updateLocation.setInt(3,ItemID);
+            updateLocation.executeUpdate();
+
+            connection.close();
+        } catch (SQLException e) {
+            logger.log(Level.WARNING,"Error updating item location");
+        }
+    }
     public static void DeleteLocation(int LocationID){
         TreeViewFactory factory = new TreeViewFactory();
         List<Location> allLocations = factory.GetLocationsList();
