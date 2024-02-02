@@ -17,6 +17,7 @@ public class HomeViewController implements Initializable {
     private static final Logger logger = Logger.getLogger(TableViewController.class.getName());
     public static Location currentLocation;
     public TableViewController tableInstance;
+    private Item currentSelectedItem;
     private static HomeViewController instance;
     @FXML
     TreeView<Location> locationSelector;
@@ -26,6 +27,10 @@ public class HomeViewController implements Initializable {
     private Label dynamicLocationLabel;
     @FXML
     private TextField homeSearchBar;
+    @FXML
+    private MenuItem moveItemMenuButton;
+    @FXML
+    private Button moveItemHereButton;
 
 
     public void initialize(URL url, ResourceBundle resourceBundle){
@@ -94,6 +99,43 @@ public class HomeViewController implements Initializable {
                 UpdateTableView();
             }
         });
+    }
+    @FXML
+    private void moveSelectedItem(){
+        try {
+            currentSelectedItem = tableInstance.itemSummaryTable.getSelectionModel().getSelectedItem();
+            int itemID = currentSelectedItem.getID();
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Moving Item Location");
+            alert.setContentText("Navigate to the location you wish to move the selected item to, then click the 'Move Here' button to continue.");
+            ButtonType result = alert.showAndWait().orElse(ButtonType.CANCEL);
+
+            moveItemHereButton.setVisible(true);
+            moveItemHereButton.setDisable(false);
+        } catch (Exception e) {
+            logger.log(Level.WARNING,"No item selected before attempting to move item.");
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Error");
+            alert.setContentText("Make sure you have selected the item you want to move before attempting to move it");
+
+            ButtonType result = alert.showAndWait().orElse(ButtonType.CANCEL);
+        }
+    }
+    @FXML
+    private void confirmItemMove(){
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirm Item Location Change");
+        alert.setContentText(String.format("You will be moving %s from %s to %s. Do you wish to continue?",currentSelectedItem.getName(),currentSelectedItem.getLocationName(),currentLocation.getName()));
+
+        ButtonType result = alert.showAndWait().orElse(ButtonType.CANCEL);
+
+        if (result == ButtonType.OK){
+            DatabaseController.UpdateLocation(currentSelectedItem.getID(),currentLocation.getID());
+            UpdateTableView();
+        }
+        currentSelectedItem = null;
+        moveItemHereButton.setVisible(false);
+        moveItemHereButton.setDisable(true);
     }
 
     @FXML
