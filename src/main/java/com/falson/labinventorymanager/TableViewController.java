@@ -108,10 +108,10 @@ public class TableViewController implements Initializable {
             TableRow<Item> row = new TableRow<>();
             row.itemProperty().addListener((obs, oldItem, newItem) -> {
                 if (newItem != null) {
-                    if (newItem.getQuantity() < newItem.getThreshold()) {
-                        row.setStyle("-fx-background-color: rgba(255,255,0,0.6)");
-                    } else if (newItem.getQuantity() == 0) {
+                    if (newItem.getQuantity() == 0) {
                         row.setStyle("-fx-background-color: rgba(255,0,0,0.6)");
+                    } else if (newItem.getQuantity() < newItem.getThreshold()) {
+                        row.setStyle("-fx-background-color: rgba(255,255,0,0.6)");
                     } else {
                         row.setStyle("");
                     }
