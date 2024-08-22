@@ -7,8 +7,13 @@
 <?import javafx.scene.text.*?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="581.0" prefWidth="592.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.falson.labinventorymanager.HomeViewController">
-   <MenuBar layoutY="1.0" prefHeight="27.0" prefWidth="68.0">
+   <MenuBar layoutY="1.0" prefHeight="28.0" prefWidth="114.0">
      <menus>
+         <Menu mnemonicParsing="false" text="File">
+           <items>
+             <MenuItem fx:id="manageDatabaseMenuButton" mnemonicParsing="false" onAction="#OnManageDatabaseAction" text="Manage Databases" />
+           </items>
+         </Menu>
        <Menu mnemonicParsing="false" text="Misc">
          <items>
            <MenuItem fx:id="moveItemMenuButton" mnemonicParsing="false" onAction="#moveSelectedItem" text="Move Item" />

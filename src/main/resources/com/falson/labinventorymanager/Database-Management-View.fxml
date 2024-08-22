@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="139.0" prefWidth="589.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.falson.labinventorymanager.ManagementViewController">
+   <children>
+      <ChoiceBox fx:id="activeDatabaseSelector" layoutX="33.0" layoutY="46.0" prefHeight="25.0" prefWidth="165.0" />
+      <Label layoutX="33.0" layoutY="24.0" text="Change Active Database:" />
+      <Button fx:id="defaultDatabaseSetButton" layoutX="230.0" layoutY="29.0" mnemonicParsing="false" onAction="#OnSetDefaultAction" prefHeight="41.0" prefWidth="143.0" text="Make Active Database Default" textAlignment="CENTER" wrapText="true" />
+      <Button fx:id="newDatabaseCreateButton" layoutX="399.0" layoutY="74.0" mnemonicParsing="false" onAction="#OnCreateNewDBAction" text="Create New Database" wrapText="true" />
+      <Button fx:id="managementViewSaveCloseButton" layoutX="252.0" layoutY="90.0" mnemonicParsing="false" onAction="#OnSaveCloseAction" text="Save&amp; Close" />
+      <Label layoutX="399.0" layoutY="24.0" text="New Database Name:" />
+      <TextField fx:id="newDatabaseNameField" layoutX="399.0" layoutY="41.0" />
+   </children>
+</AnchorPane>
