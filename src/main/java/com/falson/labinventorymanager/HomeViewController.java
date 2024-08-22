@@ -30,11 +30,17 @@ public class HomeViewController implements Initializable {
     @FXML
     private MenuItem moveItemMenuButton;
     @FXML
+    private MenuItem manageDatabaseMenuButton;
+    @FXML
     private Button moveItemHereButton;
 
 
     public void initialize(URL url, ResourceBundle resourceBundle){
         instance = this;
+        BuildAll();
+    }
+    //Call BuildAll again after DB URL is changed, and it will rebuild the entire Home View
+    public void BuildAll(){
         RebuildTree();
         UpdateTableView();
         SetTreeEventWatcher();
@@ -99,6 +105,20 @@ public class HomeViewController implements Initializable {
                 UpdateTableView();
             }
         });
+    }
+    @FXML
+    private void OnManageDatabaseAction(){
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(LabManagerMain.class.getResource("Database-Management-View.fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+            Stage stage = new Stage();
+            stage.setTitle("Manage Databases");
+            stage.setScene(scene);
+            stage.sizeToScene();
+            stage.show();
+        } catch (IOException e) {
+            logger.log(Level.WARNING,String.format("Error opening Database Management View: %s",e));
+        }
     }
     @FXML
     private void moveSelectedItem(){

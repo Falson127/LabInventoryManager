@@ -12,11 +12,11 @@ import java.util.Map;
 
 
 public class TreeViewFactory {
-    final String url = "jdbc:sqlite:LabInventory.sqlite";
 
     public List<Location> GetLocationsList(){
         try {
-            Connection connection = DriverManager.getConnection(url);
+            System.out.println(LabManagerMain.db_url);
+            Connection connection = DriverManager.getConnection(LabManagerMain.db_url);
             PreparedStatement locationRetriever = connection.prepareStatement("SELECT Name, ID, ParentID from locations_index");
             ResultSet unsortedLocationsIndex = locationRetriever.executeQuery();
             List<Location> pairedIDList = new ArrayList<>();

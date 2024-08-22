@@ -16,7 +16,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class DatabaseController implements Initializable {
-    static final String url = "jdbc:sqlite:LabInventory.sqlite";
     private int currentItem;
     private static final Logger logger = Logger.getLogger(TableViewController.class.getName());
     private Connection connection;
@@ -98,7 +97,7 @@ public class DatabaseController implements Initializable {
             parentID = HomeViewController.currentLocation.getID();
         }
         try{
-            connection = DriverManager.getConnection(url);
+            connection = DriverManager.getConnection(LabManagerMain.db_url);
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO locations_index(Name, ParentID) VALUES(?,?)");
             preparedStatement.setString(1,locationName);
             preparedStatement.setInt(2,parentID);
@@ -130,8 +129,7 @@ public class DatabaseController implements Initializable {
         try {
             LocalDate Date = addEntry_Date.getValue();
             String DateString = Date.format(formatter);
-            String url = "jdbc:sqlite:LabInventory.sqlite";
-            connection = DriverManager.getConnection(url);
+            connection = DriverManager.getConnection(LabManagerMain.db_url);
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO Item_Locations(Name,Category,Description,LocationName,DateReceived,LocationID,Quantity,Threshold,Unit) VALUES(?,?,?,?,?,?,?,?,?)");
             preparedStatement.setString(1,Name);
             preparedStatement.setString(2,Category);
@@ -159,7 +157,7 @@ public class DatabaseController implements Initializable {
     private void onEditSubmitButtonClick(){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
         try {
-            connection = DriverManager.getConnection(url);
+            connection = DriverManager.getConnection(LabManagerMain.db_url);
             PreparedStatement statement = connection.prepareStatement("UPDATE Item_Locations SET Name=?,Category=?,Description=?,DateReceived=?,Quantity=?,Threshold=?,Unit=? WHERE ID = ?");
             statement.setString(1,editEntry_Name.getText());
             statement.setString(2,editEntry_Category.getText());
@@ -197,7 +195,7 @@ public class DatabaseController implements Initializable {
     }
     public static void UpdateLocation(int ItemID, int newLocationID){
         try {
-            Connection connection = DriverManager.getConnection(url);
+            Connection connection = DriverManager.getConnection(LabManagerMain.db_url);
             PreparedStatement getName = connection.prepareStatement("SELECT Name FROM locations_index WHERE ID=?");
             getName.setInt(1,newLocationID);
             String newName = getName.executeQuery().getString("Name");
@@ -223,7 +221,7 @@ public class DatabaseController implements Initializable {
             }
         }
             try {
-                Connection connection = DriverManager.getConnection(url);
+                Connection connection = DriverManager.getConnection(LabManagerMain.db_url);
                 PreparedStatement statement = connection.prepareStatement("DELETE FROM locations_index WHERE ID = ?");
                 statement.setInt(1,LocationID);
                 PreparedStatement statement2 = connection.prepareStatement("DELETE FROM Item_Locations WHERE LocationID = ?");
@@ -236,7 +234,7 @@ public class DatabaseController implements Initializable {
     }
     public void DeleteEntry(int itemID){
         try {
-            connection = DriverManager.getConnection(url);
+            connection = DriverManager.getConnection(LabManagerMain.db_url);
             PreparedStatement statement = connection.prepareStatement("DELETE FROM Item_Locations WHERE ID = ?");
             statement.setInt(1,itemID);
             statement.execute();
@@ -249,7 +247,7 @@ public class DatabaseController implements Initializable {
     public void setCurrentItemID(int id){currentItem = id;}
     public void fetchDetailViewData(){
         try {
-            connection = DriverManager.getConnection(url);
+            connection = DriverManager.getConnection(LabManagerMain.db_url);
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM Item_Locations WHERE ID = ?");
             statement.setInt(1,currentItem);
             PopulateDetailView(statement.executeQuery());
@@ -261,7 +259,7 @@ public class DatabaseController implements Initializable {
     }
     public void fetchEditViewData(){
         try {
-            connection = DriverManager.getConnection(url);
+            connection = DriverManager.getConnection(LabManagerMain.db_url);
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM Item_Locations WHERE ID = ?");
             statement.setInt(1,currentItem);
             PopulateEditView(statement.executeQuery());
@@ -284,7 +282,7 @@ public class DatabaseController implements Initializable {
         for (String line: lines) {
             List<String> variables = new ArrayList<>(Arrays.asList(line.split(",")));//split each line on comma to get individual variables for SQL query
             try{
-                connection = DriverManager.getConnection(url);
+                connection = DriverManager.getConnection(LabManagerMain.db_url);
                 PreparedStatement statement = connection.prepareStatement("INSERT INTO Item_Locations(Name,Category,Description,LocationName,LocationID,DateReceived,Quantity,Threshold,Unit) Values(?,?,?,?,?,?,?,?,?)");
                 statement.setString(1,variables.get(1));
                 statement.setString(2,variables.get(2));

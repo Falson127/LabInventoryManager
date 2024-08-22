@@ -17,7 +17,6 @@ public class TableViewController implements Initializable {
     private static TableViewController instance;
     private String callingMethod;
     private String userInput = "";
-    final String url = "jdbc:sqlite:LabInventory.sqlite";
     @FXML
     TableView<Item> itemSummaryTable;
     @FXML
@@ -38,7 +37,7 @@ public class TableViewController implements Initializable {
         if (callingMethod.equals("Standard") || userInput.isEmpty()) {
             Location currentLocation = HomeViewController.currentLocation;
             try {
-                connection = DriverManager.getConnection(url);
+                connection = DriverManager.getConnection(LabManagerMain.db_url);
                 PreparedStatement retrieveResults = connection.prepareStatement("SELECT ID,LocationName,Name,Description,LocationID,Quantity,Threshold from Item_Locations WHERE LocationID = ?");
                 retrieveResults.setInt(1,currentLocation.getID());
                 ResultSet inventory = retrieveResults.executeQuery();
@@ -54,7 +53,7 @@ public class TableViewController implements Initializable {
             }
         }else{
             try{
-                connection = DriverManager.getConnection(url);
+                connection = DriverManager.getConnection(LabManagerMain.db_url);
                 PreparedStatement retreiveResults = connection.prepareStatement("SELECT ID, LocationName,Name,Description,LocationID,Quantity,Threshold FROM Item_Locations WHERE Name LIKE ? OR Description LIKE ?");
                 String searchTerm = '%' + userInput + '%';
                 retreiveResults.setString(1,searchTerm);
